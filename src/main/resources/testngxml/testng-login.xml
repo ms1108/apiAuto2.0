@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Second suite" verbose="1" >
+    <test name = "allTestsInAClass" >
+        <classes>
+            <class name="component.loginTest.LoginTest"/>
+        </classes>
+    </test>
+</suite>
