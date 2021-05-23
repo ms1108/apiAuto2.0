@@ -1,5 +1,9 @@
 package annotation.annotations;
 
+import annotation.IAnnotationTestMethod;
+import annotation.impl.AutoTestDefault;
+import annotation.impl.BlankDefault;
+
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
@@ -11,4 +15,7 @@ public @interface AutoTest {
     boolean isOpenAssert() default true;
 
     int sleep() default 0;
+
+    Class<? extends IAnnotationTestMethod> testMethod() default AutoTestDefault.class;
+
 }

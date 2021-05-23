@@ -1,8 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.ChineseDefaultImpl;
-import annotation.impl.EnumIntImpl;
+import annotation.impl.EnumIntDefault;
 import config.asserts.AssertMethod;
 import config.asserts.SuccessAssertDefault;
 
@@ -20,5 +19,5 @@ public @interface EnumInt {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default EnumIntImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default EnumIntDefault.class;
 }

@@ -20,7 +20,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static utils.FileUtil.writeFile;
 
 public class ApiTest {
-    //该类中的属性一定要写私有的如下,因为在实体类转json串时公有属性也会被写入json中
+    //该类中的属性一定要写私有的如下,因为在实体类转json串时公有属性也会被写入json中。并且不能加上对应各get方法
     //private Integer test = 1;
 
     public Response apiTest(BaseCase baseCase) {
@@ -28,9 +28,6 @@ public class ApiTest {
     }
 
     public Response apiTest(RequestData requestData) {
-        ReportUtil.printLog();
-        //因为一个注解可能会发送多个接口所以预置日志打印一遍之后就清除
-        ReportUtil.clearLogs();
         if (StringUtil.isEmpty(requestData.getStepDes())) {
             ReportUtil.log("Des               : " + requestData.getDes());
         } else {

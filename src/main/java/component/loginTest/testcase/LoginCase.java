@@ -19,7 +19,8 @@ import static utils.set.PropertiesUtil.get;
 
 @Data
 public class LoginCase extends BaseCase {
-    @Unique(assertFail = SuccessAssertDefault.class)
+    @Unique(assertFail = SuccessAssertDefault.class,group = "1")
+    @EnumString
     @NotNull(asserts = SuccessAssertDefault.class)
     @NotEmpty(asserts = SuccessAssertDefault.class)
     @Blank(assertFail = SuccessAssertDefault.class)
@@ -44,6 +45,7 @@ public class LoginCase extends BaseCase {
     @Accessors(fluent = true)
     public static class Type {
         @Range(maxNum = "10", minInfinite = true, assertFail = SuccessAssertDefault.class)
+        @Unique(assertFail = SuccessAssertDefault.class)
         public TypeIn role;
     }
 
@@ -52,6 +54,7 @@ public class LoginCase extends BaseCase {
     public static class TypeIn {
         @Range(minNum = "0.1", maxNum = "1", floatValue = "0.1", assertFail = SuccessAssertDefault.class)//测试范围(0,1]
         @EnumInt
+        @EnumString
         public Integer TypeIn;
     }
 
@@ -61,7 +64,6 @@ public class LoginCase extends BaseCase {
 
     @DataDepend
     public void dependBeforeClass() {
-        System.out.println("执行了LoginCase.dependBeforeClass");
         //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用
         apiTest(new RequestData(new ConfigCase().dependCase()));
     }

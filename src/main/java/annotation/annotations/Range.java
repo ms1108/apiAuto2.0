@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.RangeDefaultImpl;
+import annotation.impl.RangeDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 import config.asserts.SuccessAssertDefault;
@@ -34,7 +34,7 @@ public @interface Range {
     String[] group() default "0";//当输入0时则不进行分组考虑
 
     //自定义注解中的测试流程，示例
-    Class<? extends IAnnotationTestMethod> testMethod() default RangeDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default RangeDefault.class;
 
 
 }

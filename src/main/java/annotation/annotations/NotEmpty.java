@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.NotEmptyDefaultImpl;
+import annotation.impl.NotEmptyDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 
@@ -21,6 +21,6 @@ public @interface NotEmpty {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default NotEmptyDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default NotEmptyDefault.class;
 
 }

@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.BlankDefaultImpl;
+import annotation.impl.BlankDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 import config.asserts.SuccessAssertDefault;
@@ -20,6 +20,6 @@ public @interface Blank {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default BlankDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default BlankDefault.class;
 
 }

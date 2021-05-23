@@ -1,6 +1,6 @@
 package component.user;
 
-import base.AnnotationTest;
+import annotation.AnnotationTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

@@ -69,16 +69,16 @@ public class RequestData {
 
     public void requestData(BaseCase param) {
         this.baseParam = param;
-        this.iHost = param.iHost;
-        this.serverMap = param.serverMap;
-        this.methodAndRequestType = param.serverMap.getMethodAndRequestType();
-        this.jsonSchemaPath = param.serverMap.getJsonSchemaPath();
-        this.des = param.serverMap.getDes();
-        this.uri = param.serverMap.getUri();
-        this.assertMethod = param.assertMethod;
-        this.headers = param.headers;//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
-        this.pathParam = param.pathParam;
-        this.iParamPreHandle = param.iParamPreHandle != null ? param.iParamPreHandle : new ParamPreHandleBlankImpl();
+        this.iHost = param.getIHost();
+        this.serverMap = param.getServerMap();
+        this.methodAndRequestType = param.getServerMap().getMethodAndRequestType();
+        this.jsonSchemaPath = param.getServerMap().getJsonSchemaPath();
+        this.des = param.getServerMap().getDes();
+        this.uri = param.getServerMap().getUri();
+        this.assertMethod = param.getAssertMethod();
+        this.headers = param.getHeaders();//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
+        this.pathParam = param.getPathParam();
+        this.iParamPreHandle = param.getIParamPreHandle() != null ? param.getIParamPreHandle() : new ParamPreHandleBlankImpl();
         //param转json串时，以下的字段不需要
         param.iHost = null;
         param.serverMap = null;
@@ -90,6 +90,13 @@ public class RequestData {
         if (paramData.contains("{\"$ref\":\"@\"}")) {
             Assert.fail("Case类中不能出现以get开头的方法，或者在该方法加上注解：@JSONField(serialize = false)");
         }
+        //置null后避免空指针问题，重新赋值
+        param.iHost = this.iHost;
+        param.serverMap = this.serverMap;
+        param.assertMethod = this.assertMethod;
+        param.headers = this.headers;
+        param.pathParam = this.pathParam;
+        param.iParamPreHandle = this.iParamPreHandle;
     }
 
     public RequestData fail() {

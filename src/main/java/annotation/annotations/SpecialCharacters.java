@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.SpecialCharacterDefaultImpl;
+import annotation.impl.SpecialCharacterDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 import config.asserts.SuccessAssertDefault;
@@ -26,5 +26,5 @@ public @interface SpecialCharacters {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default SpecialCharacterDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default SpecialCharacterDefault.class;
 }

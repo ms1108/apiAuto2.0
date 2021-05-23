@@ -60,10 +60,10 @@ public class ClassFinderUtil {
         return classes;
     }
 
-    public static void main(String[] args) {
-        ClassFinderUtil classFinderUtil = new ClassFinderUtil();
-        System.out.println(classFinderUtil.scanPackage(""));
-        //System.out.println(classFinderUtil.scanned("business.loginTest.testcase"));
-    }
+    //public static void main(String[] args) {
+    //    ClassFinderUtil classFinderUtil = new ClassFinderUtil();
+    //    System.out.println(classFinderUtil.scanPackage(""));
+    //    //System.out.println(classFinderUtil.scanned("business.loginTest.testcase"));
+    //}
 
 }

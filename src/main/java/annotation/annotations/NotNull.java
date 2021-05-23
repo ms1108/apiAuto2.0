@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.NotNullDefaultImpl;
+import annotation.impl.NotNullDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 
@@ -18,6 +18,6 @@ public @interface NotNull {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default NotNullDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default NotNullDefault.class;
 
 }

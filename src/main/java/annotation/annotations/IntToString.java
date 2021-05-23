@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.IntToStringDefaultImpl;
+import annotation.impl.IntToStringDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 
@@ -17,6 +17,6 @@ public @interface IntToString {
     String resetAssert() default "";
 
     String[] group() default "0";//当输入0时则不进行分组考虑
-    Class<? extends IAnnotationTestMethod> testMethod() default IntToStringDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default IntToStringDefault.class;
 
 }

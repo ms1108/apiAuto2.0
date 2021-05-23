@@ -1,5 +1,6 @@
 package utils.listeners;
 
+import annotation.AnnotationTestEntity;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.ResourceCDN;
@@ -184,9 +185,12 @@ public class ExtentTestNGIReporterListener implements IReporter {
                 for (Object param : parameters) {
                     name += param.toString();
                 }
+                if (name.contains(AnnotationTestEntity.class.getSimpleName())) {
+                    name = name.substring(0, name.indexOf(AnnotationTestEntity.class.getSimpleName()));
+                }
                 if (name.length() > 0) {
-                    if (name.length() > 1000) {
-                        name = name.substring(0, 999) + "...";
+                    if (name.length() > 200) {
+                        name = name.substring(0, 199) + "...";
                     }
                 } else {
                     name = result.getMethod().getMethodName();

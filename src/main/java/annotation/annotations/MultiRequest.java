@@ -1,5 +1,7 @@
 package annotation.annotations;
 
+import annotation.IAnnotationTestMethod;
+import annotation.impl.MultiRequestDefault;
 import config.requestMethod.IRequestMethod;
 import config.requestMethod.MultiThreadRequestMethod;
 
@@ -21,5 +23,7 @@ public @interface MultiRequest {
     int sleep() default 0;
 
     String resetAssert() default "";
+
+    Class<? extends IAnnotationTestMethod> testMethod() default MultiRequestDefault.class;
 
 }

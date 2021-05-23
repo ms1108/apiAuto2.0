@@ -1,7 +1,7 @@
 package component.loginTest;
 
 import api.RequestData;
-import base.AnnotationTest;
+import annotation.AnnotationTest;
 import component.loginTest.testcase.ConfigCase;
 import component.loginTest.testcase.LoginCase;
 import component.loginTest.testcase.LoginCaseExtend;
@@ -16,10 +16,6 @@ import utils.listeners.RetryAnalyzer;
  * Test类，建议用于多流程，多场景测试
  */
 public class LoginTest extends AnnotationTest {
-
-    public LoginTest(String packagePath) {
-        super("component.loginTest.testcase");
-    }
 
     //更多断言方法http://testingpai.com/article/1599472747188
     @Test

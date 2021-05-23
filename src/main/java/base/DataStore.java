@@ -37,7 +37,7 @@ public class DataStore {
 
         T t = (T) response.path(path);
         if (t == null) {
-            Assert.fail("未获取到请求数据，接口：" + baseCase.serverMap.getUri() + ",路径:" + path);
+            Assert.fail("未获取到请求数据，接口：" + baseCase.getServerMap().getUri() + ",路径:" + path);
         }
         return t;
     }

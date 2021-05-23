@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.UniqueDefaultImpl;
+import annotation.impl.UniqueDefault;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
 import config.asserts.SuccessAssertDefault;
@@ -19,7 +19,7 @@ public @interface Unique {
 
     String resetAssert() default "";
 
-    String[] group() default "0";//当输入0时则不进行分组考虑
-    Class<? extends IAnnotationTestMethod> testMethod() default UniqueDefaultImpl.class;
+    String[] group() default "0";//当输入0时则不进行分组考虑//若子类的BaseCaseData没有这个1号组则子类不执行该字段
+    Class<? extends IAnnotationTestMethod> testMethod() default UniqueDefault.class;
 
 }

@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.EnumStringImpl;
+import annotation.impl.EnumStringDefault;
 import config.asserts.AssertMethod;
 import config.asserts.SuccessAssertDefault;
 
@@ -19,5 +19,5 @@ public @interface EnumString {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default EnumStringImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default EnumStringDefault.class;
 }

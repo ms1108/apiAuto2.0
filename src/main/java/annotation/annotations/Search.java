@@ -1,7 +1,7 @@
 package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
-import annotation.impl.SearchDefaultImpl;
+import annotation.impl.SearchDefault;
 import base.BaseCase;
 
 import java.lang.annotation.*;
@@ -24,6 +24,6 @@ public @interface Search {
 
     String[] group() default "0";//当输入0时则不进行分组考虑
 
-    Class<? extends IAnnotationTestMethod> testMethod() default SearchDefaultImpl.class;
+    Class<? extends IAnnotationTestMethod> testMethod() default SearchDefault.class;
 
 }
