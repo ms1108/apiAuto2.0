@@ -18,17 +18,15 @@ import java.util.stream.Collectors;
 
 @Getter
 public enum ComponentDefaultInfo {
-    COMPONENT("loginTest", DefaultHost.class, DefaultHeaders.class, ParamPreHandleImpl.class, SuccessAssertDefault.class);
+    COMPONENT("loginTest", DefaultHeaders.class, ParamPreHandleImpl.class, SuccessAssertDefault.class);
     private String packageName;
-    private Class<? extends IHost> iHost;
     private Class<? extends IHeaders> iHeaders;
     private Class<? extends IParamPreHandle> iParamPreHandle;
     private Class<? extends AssertMethod> assertMethod;
     private Map<ComponentDefaultInfo, List<String>> enumAndPackageNames;
 
-    ComponentDefaultInfo(String packageName, Class<? extends IHost> iHost, Class<? extends IHeaders> iHeaders, Class<? extends IParamPreHandle> iParamPreHandle, Class<? extends AssertMethod> assertMethod) {
+    ComponentDefaultInfo(String packageName, Class<? extends IHeaders> iHeaders, Class<? extends IParamPreHandle> iParamPreHandle, Class<? extends AssertMethod> assertMethod) {
         this.packageName = packageName;
-        this.iHost = iHost;
         this.iHeaders = iHeaders;
         this.iParamPreHandle = iParamPreHandle;
         this.assertMethod = assertMethod;

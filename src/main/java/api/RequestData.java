@@ -26,7 +26,7 @@ import java.util.Map;
 public class RequestData {
 
     private String host;
-    private IHost iHost;
+
     private String uri;
     //请求的方式
     private ApiMethod methodAndRequestType;
@@ -69,8 +69,8 @@ public class RequestData {
 
     public void requestData(BaseCase param) {
         this.baseParam = param;
-        this.iHost = param.getIHost();
         this.serverMap = param.getServerMap();
+        this.host = param.getServerMap().getHost();
         this.methodAndRequestType = param.getServerMap().getMethodAndRequestType();
         this.jsonSchemaPath = param.getServerMap().getJsonSchemaPath();
         this.des = param.getServerMap().getDes();
@@ -80,7 +80,6 @@ public class RequestData {
         this.pathParam = param.getPathParam();
         this.iParamPreHandle = param.getIParamPreHandle() != null ? param.getIParamPreHandle() : new ParamPreHandleBlankImpl();
         //param转json串时，以下的字段不需要
-        param.iHost = null;
         param.serverMap = null;
         param.assertMethod = null;
         param.headers = null;
@@ -91,7 +90,6 @@ public class RequestData {
             Assert.fail("Case类中不能出现以get开头的方法，或者在该方法加上注解：@JSONField(serialize = false)");
         }
         //置null后避免空指针问题，重新赋值
-        param.iHost = this.iHost;
         param.serverMap = this.serverMap;
         param.assertMethod = this.assertMethod;
         param.headers = this.headers;
@@ -113,9 +111,5 @@ public class RequestData {
         //之后再调直接返回。
         // 传入paramData是因为注解测试会对数据做修改，正在发送数据是通过调getParam获取请求数据
         return this.param == null ? this.iParamPreHandle.paramPreHandle(paramData) : this.param;
-    }
-
-    public String getHost() {
-        return this.host == null ? this.iHost.getHost() : this.host;
     }
 }

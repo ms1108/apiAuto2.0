@@ -1,6 +1,8 @@
 package base;
 
 public interface IServiceMap {
+    String getHost();
+
     String getUri();
 
     ApiMethod getMethodAndRequestType();

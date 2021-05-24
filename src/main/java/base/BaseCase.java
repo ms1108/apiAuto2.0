@@ -10,7 +10,6 @@ import lombok.SneakyThrows;
 @Data
 public class BaseCase extends CommandLogic {
     public String pathParam;//开头需要携带斜杠'/'
-    public IHost iHost;
     public IServiceMap serverMap;
     public IHeaders headers;
     public IParamPreHandle iParamPreHandle;
@@ -21,7 +20,6 @@ public class BaseCase extends CommandLogic {
     public BaseCase() {
         String packageName = this.getClass().getPackage().getName();
         ComponentDefaultInfo defaultImplEnum = ComponentDefaultInfo.getModuleEnum(packageName);
-        iHost = defaultImplEnum.getIHost().newInstance();
         headers = defaultImplEnum.getIHeaders().newInstance();
         iParamPreHandle = defaultImplEnum.getIParamPreHandle().newInstance();
         assertMethod = defaultImplEnum.getAssertMethod().newInstance();

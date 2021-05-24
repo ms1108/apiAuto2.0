@@ -88,12 +88,6 @@ public class ApiTest {
             requestData.getAssertMethod().assets(requestData, response);
         }
 
-        //保存token
-        if (requestData.getUri().equals(LoginService.Login.getUri())
-                && response.statusCode() == 200
-                && response.path(defaultAssertPath) == defaultAssertValue) {
-            //BaseData.token = response.path("data.token");
-        }
         return response;
     }
 }
