@@ -1,5 +1,6 @@
 package datafactory;
 
+import annotation.AnnotationTestEntity;
 import annotation.annotations.DataDepend;
 import api.ApiTest;
 import api.RequestData;
@@ -13,6 +14,7 @@ import utils.set.PropertiesUtil;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,6 @@ public class DataFactoryTest extends ApiTest {
     public List<DataFactoryEntity> dataFactoryBaseCase;
 
     @Test
-    @SneakyThrows
     public void createData() {
         if (dataFactoryBaseCase == null) {
             dataFactoryBaseCase = getDataFactoryBaseCase("component");
@@ -43,24 +44,45 @@ public class DataFactoryTest extends ApiTest {
         }).collect(Collectors.toList());
         //发送接口
         for (DataFactoryEntity dataFactoryEntity : dataFactoryEntities) {
-            BaseCase baseCase = dataFactoryEntity.getBaseCase().newInstance();
-            //调用依赖方法，创建数据
-            dataFactoryEntity.getDependMethod().invoke(baseCase);
-            //调用创造数据方法
-            DataFactory annotation = dataFactoryEntity.getDataFactoryMethod().getAnnotation(DataFactory.class);
-            ReportUtil.log("DataFactoryDes    : " + annotation.des());
-            BaseCase dataFactoryBaseCase = (BaseCase) dataFactoryEntity.getDataFactoryMethod().invoke(baseCase);
-            apiTest(new RequestData(dataFactoryBaseCase));
+            executeDataFactoryTest(dataFactoryEntity);
         }
 
     }
 
-    //扫描包并存储满足条件的类和方法
     @SneakyThrows
+    public void executeDataFactoryTest(DataFactoryEntity dataFactoryEntity) {
+        BaseCase baseCase = dataFactoryEntity.getBaseCase().newInstance();
+        //调用依赖方法，创建数据
+        dataFactoryEntity.getDependMethod().invoke(baseCase);
+        //调用创造数据方法
+        DataFactory annotation = dataFactoryEntity.getDataFactoryMethod().getAnnotation(DataFactory.class);
+        ReportUtil.log("DataFactoryDes    : " + annotation.des());
+        BaseCase dataFactoryBaseCase = (BaseCase) dataFactoryEntity.getDataFactoryMethod().invoke(baseCase);
+        apiTest(new RequestData(dataFactoryBaseCase));
+    }
+
     public List<DataFactoryEntity> getDataFactoryBaseCase(String packageName) {
-        List<DataFactoryEntity> dataFactoryEntities = new ArrayList<>();
         ClassFinderUtil classFinderUtil = new ClassFinderUtil();
         List<Class<? extends BaseCase>> classes = classFinderUtil.scanBaseCaseClass(packageName);
+        return getDataFactoryBaseCase(classes);
+    }
+
+    //传入单个class类做调试用
+    @SafeVarargs
+    public final List<DataFactoryEntity> getDataFactoryBaseCase(Class<? extends BaseCase>... baseCaseClass) {
+        if (baseCaseClass.length == 0) {
+            //Class<? extends BaseCase> thisClass = (Class<? extends BaseCase>)Class.forName(this.getClass().getPackage().getName());
+            //baseCaseClass[0] = thisClass;
+            System.out.println("需要传入继承了BaseCase的类");
+            return null;
+        }
+        return getDataFactoryBaseCase(new ArrayList<>(Arrays.asList(baseCaseClass)));
+    }
+
+    //扫描包并存储满足条件的类和方法
+    @SneakyThrows
+    public List<DataFactoryEntity> getDataFactoryBaseCase(List<Class<? extends BaseCase>> classes) {
+        List<DataFactoryEntity> dataFactoryEntities = new ArrayList<>();
         for (Class<? extends BaseCase> aClass : classes) {
             Method dependMethod = null;
             List<Method> dataFactoryMethods = new ArrayList<>();

@@ -55,29 +55,6 @@ public class AnnotationTest extends AnnotationServer {
         return array;
     }
 
-    @SneakyThrows
-    public void executeAnnotationTest(AnnotationTestEntity annotationTestEntity) {
-        //初始化BaseCase对象
-        annotationTestEntity.baseCase = annotationTestEntity.baseCaseClass.newInstance();
-        //执行依赖方法
-        Method dataDependMethod = annotationTestEntity.dataDependMethod;
-        if (dataDependMethod != null && annotationTestEntity.executeDataDependMethod) {
-            ReportUtil.log("DataDependMethod  : " + dataDependMethod.getName());
-            dataDependMethod.invoke(annotationTestEntity.baseCase);
-        }
-        //执行BaseCaseData
-        Method baseCaseDataMethod = annotationTestEntity.baseCaseDataMethod;
-        BaseCase baseCaseData;
-        if (baseCaseDataMethod != null) {
-            baseCaseData = (BaseCase) baseCaseDataMethod.invoke(annotationTestEntity.baseCase);
-        } else {//不存在baseCaseData则用初始对象
-            baseCaseData = annotationTestEntity.baseCase;
-        }
-        annotationTestEntity.baseCaseData = baseCaseData;
-        IAnnotationTestMethod instance = annotationTestEntity.iAnnotationTestMethod.newInstance();
-        instance.testMethod(annotationTestEntity);
-    }
-
     public String testNgMethodName(AnnotationTestEntity annotationTestEntity) {
         StringBuilder sb = new StringBuilder();
         if (annotationTestEntity.baseCaseClass != null)

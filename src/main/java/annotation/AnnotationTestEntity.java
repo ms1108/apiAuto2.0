@@ -1,12 +1,13 @@
 package annotation;
 
 import base.BaseCase;
-import lombok.ToString;
+import lombok.Data;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+@Data
 public class AnnotationTestEntity {
     public Field field;
     public String fieldPath;
@@ -24,17 +25,4 @@ public class AnnotationTestEntity {
     public Object value;
     public String des;
 
-    @Override
-    public String toString() {
-        return "AnnotationTestEntity{" +
-                "field=" + field +
-                ", fieldPath='" + fieldPath + '\'' +
-                ", dataDependMethod=" + dataDependMethod +
-                ", baseCaseDataMethod=" + baseCaseDataMethod +
-                ", baseCaseClass=" + baseCaseClass +
-                ", annotation=" + annotation +
-                ", iAnnotationTestMethod=" + iAnnotationTestMethod +
-                ", method=" + method +
-                '}';
-    }
 }

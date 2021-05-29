@@ -6,6 +6,7 @@ import base.BaseCase;
 import base.CommandLogic;
 import lombok.SneakyThrows;
 import utils.ClassFinderUtil;
+import utils.ReportUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -18,9 +19,25 @@ public class AnnotationServer extends CommandLogic {
     boolean executeDataDependMethod;
 
     public List<AnnotationTestEntity> createAnnotationTestEntity(String packageName) {
+        List<Class<? extends BaseCase>> baseCaseClasss = getBaseCaseClass(packageName);
+        return createAnnotationTestEntity(baseCaseClasss);
+    }
+
+    //传入单个class类做调试用
+    @SafeVarargs
+    public final List<AnnotationTestEntity> createAnnotationTestEntity(Class<? extends BaseCase>... baseCaseClass) {
+        if (baseCaseClass.length == 0) {
+            //Class<? extends BaseCase> thisClass = (Class<? extends BaseCase>)Class.forName(this.getClass().getPackage().getName());
+            //baseCaseClass[0] = thisClass;
+            System.out.println("需要传入继承了BaseCase的类");
+            return null;
+        }
+        return createAnnotationTestEntity(new ArrayList<>(Arrays.asList(baseCaseClass)));
+    }
+
+    public List<AnnotationTestEntity> createAnnotationTestEntity(List<Class<? extends BaseCase>> baseCaseClasss) {
         List<AnnotationTestEntity> annotationTestEntities = new ArrayList<>();
-        List<Class<? extends BaseCase>> baseCaseName = getBaseCaseName(packageName);
-        for (Class<? extends BaseCase> baseCaseClass : baseCaseName) {
+        for (Class<? extends BaseCase> baseCaseClass : baseCaseClasss) {
             Method dataDependMethod = null;
             List<Method> baseCaseDataMethods = new ArrayList<>();
             List<Method> autoTestMethods = new ArrayList<>();
@@ -73,6 +90,7 @@ public class AnnotationServer extends CommandLogic {
                 annotationTestEntity.baseCaseClass = baseCaseClass;
                 annotationTestEntity.iAnnotationTestMethod = annotation.testMethod();
                 annotationTestEntities.add(annotationTestEntity);
+
             }
         }
         return annotationTestEntities;
@@ -209,9 +227,31 @@ public class AnnotationServer extends CommandLogic {
         }
     }
 
-    public List<Class<? extends BaseCase>> getBaseCaseName(String scannedPackage) {
+    public List<Class<? extends BaseCase>> getBaseCaseClass(String scannedPackage) {
         ClassFinderUtil classFinderUtil = new ClassFinderUtil();
         return classFinderUtil.scanBaseCaseClass(scannedPackage);
     }
 
+    @SneakyThrows
+    public void executeAnnotationTest(AnnotationTestEntity annotationTestEntity) {
+        //初始化BaseCase对象
+        annotationTestEntity.baseCase = annotationTestEntity.baseCaseClass.newInstance();
+        //执行依赖方法
+        Method dataDependMethod = annotationTestEntity.dataDependMethod;
+        if (dataDependMethod != null && annotationTestEntity.executeDataDependMethod) {
+            ReportUtil.log("DataDependMethod  : " + dataDependMethod.getName());
+            dataDependMethod.invoke(annotationTestEntity.baseCase);
+        }
+        //执行BaseCaseData
+        Method baseCaseDataMethod = annotationTestEntity.baseCaseDataMethod;
+        BaseCase baseCaseData;
+        if (baseCaseDataMethod != null) {
+            baseCaseData = (BaseCase) baseCaseDataMethod.invoke(annotationTestEntity.baseCase);
+        } else {//不存在baseCaseData则用初始对象
+            baseCaseData = annotationTestEntity.baseCase;
+        }
+        annotationTestEntity.baseCaseData = baseCaseData;
+        IAnnotationTestMethod instance = annotationTestEntity.iAnnotationTestMethod.newInstance();
+        instance.testMethod(annotationTestEntity);
+    }
 }

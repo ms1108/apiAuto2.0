@@ -2,7 +2,6 @@ package api;
 
 import base.BaseCase;
 import base.DataStore;
-import component.loginTest.service_constant.LoginService;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
