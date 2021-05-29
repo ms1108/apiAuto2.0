@@ -140,10 +140,10 @@ public class LoginCase extends BaseCase {
 
         if (annotationTestEntities != null && annotationTestEntities.size() > 0) {
             //只想执行某个注解可以这么写，想执行全部则注释掉这个过滤
-            annotationTestEntities = annotationTestEntities.stream()
-                    .filter(x -> x.annotation.annotationType().getSimpleName().equals(AutoTest.class.getSimpleName())).collect(Collectors.toList());
-            //第一个对象必须执行依赖测试
-            annotationTestEntities.get(0).setExecuteDataDependMethod(true);
+            //annotationTestEntities = annotationTestEntities.stream()
+            //        .filter(x -> x.annotation.annotationType().getSimpleName().equals(AutoTest.class.getSimpleName())).collect(Collectors.toList());
+            ////第一个对象必须执行依赖测试
+            //annotationTestEntities.get(0).setExecuteDataDependMethod(true);
 
             for (AnnotationTestEntity testEntity : annotationTestEntities) {
                 annotationServer.executeAnnotationTest(testEntity);
