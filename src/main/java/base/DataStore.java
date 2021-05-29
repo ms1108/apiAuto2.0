@@ -11,8 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataStore {
+    //存储响应信息
     public static Map<String, Response> res = new HashMap<>();
+    //存储请求信息
     public static Map<String, JsonPath> req = new HashMap<>();
+    //需要在方法间传递的参数,主要用于sql读取到数据后，其他方法能读取到该数据，或者在数据依赖中直接对字段赋值就不用这么传了
+    public static Map<String,Object> args;
     public static String currentLoginName;
     public static String currentLoginPwd;
     public static String token;

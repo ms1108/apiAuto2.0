@@ -20,8 +20,6 @@ public class BaseCase extends CommandLogic {
     public IParamPreHandle iParamPreHandle;
     //断言的方式
     public AssertMethod assertMethod;
-    //需要在方法间传递的参数,主要用于sql读取到数据后，其他方法能读取到该数据，或者在数据依赖中直接对字段赋值就不用这么传了
-    public Map<String,Object> args;
 
     //根据模块赋默认的实现对象
     @SneakyThrows

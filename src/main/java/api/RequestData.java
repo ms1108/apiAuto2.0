@@ -61,8 +61,6 @@ public class RequestData {
     private IRequestMethod iRequestMethod = new DefaultRequestMethod();
     //用于拼接默认的请求字段，比如 {a:{k:v}},a对象每个请求都有
     private IParamPreHandle iParamPreHandle;
-    //方法间的参数传递
-    private Map<String, Object> args;
 
     public RequestData(BaseCase param) {
         requestData(param);
@@ -80,14 +78,12 @@ public class RequestData {
         this.headers = param.getHeaders();//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
         this.pathParam = param.getPathParam();
         this.iParamPreHandle = param.getIParamPreHandle() != null ? param.getIParamPreHandle() : new ParamPreHandleBlankImpl();
-        this.args = param.args;
         //param转json串时，以下的字段不需要
         param.serverMap = null;
         param.assertMethod = null;
         param.headers = null;
         param.pathParam = null;
         param.iParamPreHandle = null;
-        param.args = null;
         this.paramData = JSONObject.toJSONString(param);
         if (paramData.contains("{\"$ref\":\"@\"}")) {
             Assert.fail("Case类中不能出现以get开头的方法，或者在该方法加上注解：@JSONField(serialize = false)");
@@ -98,7 +94,6 @@ public class RequestData {
         param.headers = this.headers;
         param.pathParam = this.pathParam;
         param.iParamPreHandle = this.iParamPreHandle;
-        param.args = this.args;
     }
 
     public RequestData fail() {
