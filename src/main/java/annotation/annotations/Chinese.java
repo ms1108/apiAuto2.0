@@ -7,6 +7,9 @@ import config.asserts.SuccessAssertDefault;
 
 import java.lang.annotation.*;
 
+/**
+ * 中文测试，输入中文
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
 @Inherited

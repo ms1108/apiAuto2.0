@@ -5,7 +5,9 @@ import annotation.impl.SearchDefault;
 import base.BaseCase;
 
 import java.lang.annotation.*;
-
+/**
+ * 搜索测试
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
 @Inherited

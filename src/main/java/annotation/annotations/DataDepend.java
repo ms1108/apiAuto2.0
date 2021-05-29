@@ -1,7 +1,9 @@
 package annotation.annotations;
 
 import java.lang.annotation.*;
-
+/**
+ * 每个接口所要依赖的数据
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD})
 @Inherited

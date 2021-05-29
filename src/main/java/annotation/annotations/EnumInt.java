@@ -6,7 +6,9 @@ import config.asserts.AssertMethod;
 import config.asserts.SuccessAssertDefault;
 
 import java.lang.annotation.*;
-
+/**
+ * 该字段支持的枚举，每个枚举值都会作为值发送一遍
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
 @Inherited

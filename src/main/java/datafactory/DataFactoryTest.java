@@ -71,8 +71,6 @@ public class DataFactoryTest extends ApiTest {
     @SafeVarargs
     public final List<DataFactoryEntity> getDataFactoryBaseCase(Class<? extends BaseCase>... baseCaseClass) {
         if (baseCaseClass.length == 0) {
-            //Class<? extends BaseCase> thisClass = (Class<? extends BaseCase>)Class.forName(this.getClass().getPackage().getName());
-            //baseCaseClass[0] = thisClass;
             System.out.println("需要传入继承了BaseCase的类");
             return null;
         }

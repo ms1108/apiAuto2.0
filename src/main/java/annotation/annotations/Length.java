@@ -7,7 +7,9 @@ import config.asserts.FailAssetDefault;
 import config.asserts.SuccessAssertDefault;
 
 import java.lang.annotation.*;
-
+/**
+ * 长度测试
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
 @Inherited
