@@ -5,6 +5,6 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class BaseIdCase extends BaseCase{
+public abstract class BaseIdCase extends BaseCase{
     public Integer id;
 }

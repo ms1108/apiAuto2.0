@@ -12,6 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.listeners.RetryAnalyzer;
 
+import static base.DataStore.dependChainDIY;
+
 /**
  * Test类，建议用于多流程，多场景测试
  */
@@ -20,7 +22,15 @@ public class LoginTest extends AnnotationTest {
     //更多断言方法http://testingpai.com/article/1599472747188
     @Test
     public void test() {
-        apiTest(new RequestData(new LoginCase().rightLoginCase())
+        dependChainDIY.put(ConfigCase.class.getSimpleName(), new ConfigCase() {
+            @Override
+            public void dataDepend() {
+                System.out.println("自定义依赖调用链");
+            }
+        });
+        LoginCase loginCase = new LoginCase();
+        loginCase.dataDepend();
+        apiTest(new RequestData(loginCase.rightLoginCase())
                 .setStepDes("这是我的测试步骤")
                 .setAssertMethod(new SuccessAssertDefault()
                         .setAssert(new EqualAssert("res", "test success"))));
@@ -38,7 +48,7 @@ public class LoginTest extends AnnotationTest {
 
     @Test
     public void test11() {
-        apiTest(new RequestData(new ConfigCase().dependCase()));
+        apiTest(new RequestData(new ConfigCase().config()));
         apiTest(new LoginCase().rightLoginCase());
         //.then().body("res", equalTo("test success"));
 
@@ -59,13 +69,13 @@ public class LoginTest extends AnnotationTest {
 
     @Test
     public void test3() {
-        apiTest(new RequestData(new ConfigCase().dependCase()));
+        apiTest(new RequestData(new ConfigCase().config()));
         apiTest(new RequestData(new LoginCase().dependCase()));
     }
 
     @Test
     public void test4() {
-        apiTest(new RequestData(new ConfigCase().dependCase()));
+        apiTest(new RequestData(new ConfigCase().config()));
         apiTest(new RequestData(new LoginCase().dependCase1()));
     }
 
@@ -76,18 +86,20 @@ public class LoginTest extends AnnotationTest {
 
     //对该用例开启重试功能
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void retryTest(){
+    public void retryTest() {
         System.out.println("start");
         Assert.fail();
     }
+
     //跳过该用例的执行
     @Test(enabled = false)
-    public void retryTest1(){
+    public void retryTest1() {
         System.out.println("start");
 
     }
+
     @Test
-    public void testextend(){
+    public void testextend() {
         LoginCaseExtend loginCaseExtend = new LoginCaseExtend();
         loginCaseExtend.rightLoginCaseExtend();
         apiTest(new RequestData(loginCaseExtend));

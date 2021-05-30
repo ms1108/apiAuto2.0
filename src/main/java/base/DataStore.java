@@ -1,12 +1,15 @@
 package base;
 
 import api.ApiTest;
+import component.loginTest.testcase.ConfigCase;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import lombok.SneakyThrows;
 import org.testng.Assert;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +27,10 @@ public class DataStore {
     public static Object defaultAssertValue = 0;
     public static boolean isOpenAnnotation = true;
     public static String downloadDir = "src/main/resources/download";
-    //存储原始的依赖实体
-    public static Map<String, CommonLogic> nameAndDependOriginal = new HashMap<>();
+    //存储原始的调用链依赖的实体
+    public static Map<String, Object> dependChainOrigin = new HashMap<>();
+    //自定义的调用链依赖使用，即用即清理
+    public static Map<String, Object> dependChainDIY = new HashMap<>();
 
     //获取响应中的值
     public static <T> T getResponseValue(IServiceMap iServiceMap, String path) {

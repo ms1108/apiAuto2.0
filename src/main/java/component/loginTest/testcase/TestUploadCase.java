@@ -12,4 +12,9 @@ public class TestUploadCase extends UploadCase {
         filePath = "moco/test.json";
         return this;
     }
+
+    @Override
+    public void dataDepend() {
+
+    }
 }

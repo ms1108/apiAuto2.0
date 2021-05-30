@@ -3,7 +3,6 @@ package component.loginTest.testcase;
 import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
-import api.RequestData;
 import base.BaseCase;
 import config.asserts.*;
 import datafactory.DataFactoryEntity;
@@ -32,9 +31,10 @@ public class LoginCaseExtend extends LoginCase {
     }
 
     @DataDepend(isAlwaysExecute = true)
-    public void dependBeforeClass() {
-        //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用，或者直接new对应的BaseCase类执行接口
-        apiTest(new RequestData(new ConfigCase().dependCase()));
+    public void dataDepend() {
+        ConfigCase baseCase = newDependInstance(ConfigCase.class);
+        baseCase.dataDepend();
+        apiTest(baseCase.config());
     }
 
     @BaseCaseData

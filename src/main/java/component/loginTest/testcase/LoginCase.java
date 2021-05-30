@@ -3,7 +3,6 @@ package component.loginTest.testcase;
 import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
-import api.RequestData;
 import base.BaseCase;
 import base.IServiceMap;
 import component.loginTest.service_constant.LoginConstant;
@@ -19,7 +18,6 @@ import lombok.experimental.Accessors;
 import utils.RandomUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static base.DataStore.*;
 import static component.loginTest.service_constant.LoginConstant.IS_MENAGE;
@@ -70,9 +68,10 @@ public class LoginCase extends BaseCase {
     }
 
     @DataDepend
-    public void dependBeforeClass() {
-        //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用，或者直接new对应的BaseCase类执行接口
-        apiTest(new RequestData(new ConfigCase().dependCase()));
+    public void dataDepend() {
+        ConfigCase baseCase = newDependInstance(ConfigCase.class);
+        baseCase.dataDepend();
+        apiTest(baseCase.config());
     }
 
     @BaseCaseData
@@ -120,13 +119,13 @@ public class LoginCase extends BaseCase {
         loginCase.depend = null;
         //从其他响应中获取值，需要事先调用相应接口
         loginCase.depend = getResponseValue(LoginService.Config, "res.depend");
-        loginCase.depend = invokeApiGetValue(new ConfigCase().dependCase(), "res.depend");
+        loginCase.depend = invokeApiGetValue(new ConfigCase(), "res.depend");
         return this;
     }
 
     public AssertMethod assertRightLogin() {
         return new SuccessAssertGather(new EqualAssert("res", "test success"),
-                new ByOtherApiAssert(new ConfigCase().dependCase()), new EqualAssert("res.depend", "123"));
+                new ByOtherApiAssert(new ConfigCase().config()), new EqualAssert("res.depend", "123"));
     }
 
     //调试注解测试

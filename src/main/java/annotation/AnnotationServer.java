@@ -3,7 +3,6 @@ package annotation;
 import annotation.annotations.*;
 import api.ApiTest;
 import base.BaseCase;
-import base.CommonLogic;
 import lombok.SneakyThrows;
 import utils.ClassFinderUtil;
 import utils.ReportUtil;
@@ -13,7 +12,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class AnnotationServer extends CommonLogic {
+public class AnnotationServer extends ApiTest{
 
     private String rootPath = "";
     boolean executeDataDependMethod;
@@ -47,8 +46,7 @@ public class AnnotationServer extends CommonLogic {
                 //这些类不进行遍历
                 if (currentClassName.equals(BaseCase.class.getSimpleName())
                         || currentClassName.equals(Object.class.getSimpleName())
-                        || currentClassName.equals(ApiTest.class.getSimpleName())
-                        || currentClassName.equals(CommonLogic.class.getSimpleName())) {
+                        || currentClassName.equals(ApiTest.class.getSimpleName())) {
                     continue;
                 }
                 if (method.isAnnotationPresent(annotation.annotations.DataDepend.class)) {
@@ -108,8 +106,7 @@ public class AnnotationServer extends CommonLogic {
             //这些类不进行遍历
             if (currentClassName.equals(BaseCase.class.getSimpleName())
                     || currentClassName.equals(Object.class.getSimpleName())
-                    || currentClassName.equals(ApiTest.class.getSimpleName())
-                    || currentClassName.equals(CommonLogic.class.getSimpleName())) {
+                    || currentClassName.equals(ApiTest.class.getSimpleName())) {
                 continue;
             }
             if (field.isAnnotationPresent(Blank.class)) {
@@ -260,10 +257,5 @@ public class AnnotationServer extends CommonLogic {
         annotationTestEntity.baseCaseData = baseCaseData;
         IAnnotationTestMethod instance = annotationTestEntity.iAnnotationTestMethod.newInstance();
         instance.testMethod(annotationTestEntity);
-    }
-
-    @Override
-    public void dependConstant() {
-
     }
 }
