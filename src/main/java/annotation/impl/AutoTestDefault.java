@@ -13,8 +13,8 @@ public class AutoTestDefault extends IAnnotationTestMethod {
     public void testMethod(AnnotationTestEntity annotationTestEntity) {
         AutoTest annotation = (AutoTest) annotationTestEntity.annotation;
         BaseCase baseCaseTest = (BaseCase) annotationTestEntity.method.invoke(annotationTestEntity.baseCaseData);
-        String des = "执行@AutoTest,类名:" + annotationTestEntity.baseCaseClass.getSimpleName() +
-                ",方法名:" + annotationTestEntity.method.getName() + "，" + annotation.des();
+        String des = "类名:" + annotationTestEntity.baseCaseClass.getSimpleName() +
+                ",执行@" + AutoTest.class.getSimpleName() + ",方法名:" + annotationTestEntity.method.getName() + "，" + annotation.des();
         apiTest(new RequestData(baseCaseTest)
                 .setStepDes(des)
                 .setOpenAssert(annotation.isOpenAssert())

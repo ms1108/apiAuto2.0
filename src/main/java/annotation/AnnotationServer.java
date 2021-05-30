@@ -27,8 +27,6 @@ public class AnnotationServer extends CommandLogic {
     @SafeVarargs
     public final List<AnnotationTestEntity> createAnnotationTestEntity(Class<? extends BaseCase>... baseCaseClass) {
         if (baseCaseClass.length == 0) {
-            //Class<? extends BaseCase> thisClass = (Class<? extends BaseCase>)Class.forName(this.getClass().getPackage().getName());
-            //baseCaseClass[0] = thisClass;
             System.out.println("需要传入继承了BaseCase的类");
             return null;
         }
@@ -44,7 +42,7 @@ public class AnnotationServer extends CommandLogic {
             List<Method> multiRequestMethods = new ArrayList<>();
             executeDataDependMethod = true;
             //先保存需要到的方法
-            for (Method method : baseCaseClass.getMethods()) {
+            for (Method method : baseCaseClass.getDeclaredMethods()) {
                 String currentClassName = method.getDeclaringClass().getSimpleName();
                 //这些类不进行遍历
                 if (currentClassName.equals(BaseCase.class.getSimpleName())
@@ -57,17 +55,17 @@ public class AnnotationServer extends CommandLogic {
                     dataDependMethod = method;
                 }
                 //同时限定方法为该类下的
-                if (method.isAnnotationPresent(BaseCaseData.class) && currentClassName.equals(baseCaseClass.getSimpleName())) {
+                if (method.isAnnotationPresent(BaseCaseData.class)) {
                     baseCaseDataMethods.add(method);
                 }
-                if (method.isAnnotationPresent(AutoTest.class) && currentClassName.equals(baseCaseClass.getSimpleName())) {
+                if (method.isAnnotationPresent(AutoTest.class)) {
                     autoTestMethods.add(method);
                 }
-                if (method.isAnnotationPresent(MultiRequest.class) && currentClassName.equals(baseCaseClass.getSimpleName())) {
+                if (method.isAnnotationPresent(MultiRequest.class)) {
                     multiRequestMethods.add(method);
                 }
             }
-            Field[] fields = baseCaseClass.getFields();
+            Field[] fields = baseCaseClass.getDeclaredFields();
             fieldAnnotation(baseCaseClass, fields, dataDependMethod, baseCaseDataMethods, annotationTestEntities);
 
             //处理方法上的注解测试
@@ -196,6 +194,7 @@ public class AnnotationServer extends CommandLogic {
             //第一个实体一定记录的是执行依赖，切换另一个BaseCase类则executeDataDependMethod被重新赋值为true
             annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
             //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
+            if (dataDependMethod!=null)
             executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).value();
             fieldAndMethodSameGroupEntities.add(annotationTestEntity);
         }

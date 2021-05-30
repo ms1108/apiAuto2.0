@@ -6,8 +6,6 @@ import config.preparamhandle.IParamPreHandle;
 import lombok.Data;
 import lombok.SneakyThrows;
 
-import java.util.Map;
-
 @Data
 public class BaseCase extends CommandLogic {
     //拼接路径参数

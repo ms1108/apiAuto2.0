@@ -71,7 +71,7 @@ public class LoginCase extends BaseCase {
 
     @DataDepend
     public void dependBeforeClass() {
-        //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用
+        //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用，或者直接new对应的BaseCase类执行接口
         apiTest(new RequestData(new ConfigCase().dependCase()));
     }
 
@@ -129,6 +129,7 @@ public class LoginCase extends BaseCase {
                 new ByOtherApiAssert(new ConfigCase().dependCase()), new EqualAssert("res.depend", "123"));
     }
 
+    //调试注解测试
     @SneakyThrows
     public static void main(String[] args) {
         //注解测试
@@ -141,7 +142,8 @@ public class LoginCase extends BaseCase {
         if (annotationTestEntities != null && annotationTestEntities.size() > 0) {
             //只想执行某个注解可以这么写，想执行全部则注释掉这个过滤
             //annotationTestEntities = annotationTestEntities.stream()
-            //        .filter(x -> x.annotation.annotationType().getSimpleName().equals(AutoTest.class.getSimpleName())).collect(Collectors.toList());
+            //        .filter(x -> x.annotation.annotationType().getSimpleName().equals(AutoTest.class.getSimpleName()))
+            //        .collect(Collectors.toList());
             ////第一个对象必须执行依赖测试
             //annotationTestEntities.get(0).setExecuteDataDependMethod(true);
 

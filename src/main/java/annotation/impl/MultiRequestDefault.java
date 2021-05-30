@@ -15,8 +15,8 @@ public class MultiRequestDefault extends IAnnotationTestMethod {
     public void testMethod(AnnotationTestEntity annotationTestEntity) {
         MultiRequest annotation = (MultiRequest) annotationTestEntity.annotation;
         BaseCase baseCaseMethod = (BaseCase) annotationTestEntity.method.invoke(annotationTestEntity.baseCaseData);
-        String des = "执行@MultiRequest,类名:" + annotationTestEntity.baseCaseClass.getSimpleName() +
-                ",方法名:" + annotationTestEntity.method.getName() + "，" + annotation.des();
+        String des = "类名:" + annotationTestEntity.baseCaseClass.getSimpleName() +
+                ",执行@" + MultiRequest.class.getSimpleName() + ",方法名:" + annotationTestEntity.method.getName() + "，" + annotation.des();
         RequestData requestData = new RequestData(baseCaseMethod)
                 .setMultiThreadNum(annotation.multiThreadNum())
                 .setIRequestMethod(annotation.iRequest().newInstance())

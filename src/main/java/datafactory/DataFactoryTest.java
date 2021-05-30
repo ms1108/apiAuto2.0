@@ -1,6 +1,5 @@
 package datafactory;
 
-import annotation.AnnotationTestEntity;
 import annotation.annotations.DataDepend;
 import api.ApiTest;
 import api.RequestData;
@@ -53,6 +52,7 @@ public class DataFactoryTest extends ApiTest {
     public void executeDataFactoryTest(DataFactoryEntity dataFactoryEntity) {
         BaseCase baseCase = dataFactoryEntity.getBaseCase().newInstance();
         //调用依赖方法，创建数据
+        if (dataFactoryEntity.getDependMethod()!=null)
         dataFactoryEntity.getDependMethod().invoke(baseCase);
         //调用创造数据方法
         DataFactory annotation = dataFactoryEntity.getDataFactoryMethod().getAnnotation(DataFactory.class);
@@ -85,7 +85,7 @@ public class DataFactoryTest extends ApiTest {
             Method dependMethod = null;
             List<Method> dataFactoryMethods = new ArrayList<>();
             //先获取该类下所有符合条件的方法
-            for (Method method : aClass.getMethods()) {
+            for (Method method : aClass.getDeclaredMethods()) {
                 if (method.isAnnotationPresent(DataDepend.class)) {
                     dependMethod = method;
                 }

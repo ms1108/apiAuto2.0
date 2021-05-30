@@ -1,5 +1,7 @@
 package component.loginTest.testcase;
 
+import annotation.AnnotationServer;
+import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import api.RequestData;
 import base.BaseCase;
@@ -7,10 +9,16 @@ import component.loginTest.service_constant.LoginConstant;
 import component.loginTest.service_constant.LoginService;
 import config.asserts.*;
 import config.header.DefaultHeaders;
+import datafactory.DataFactoryEntity;
+import datafactory.DataFactoryTest;
 import datafactory.annotation.DataFactory;
 import lombok.Data;
+import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
 import utils.RandomUtil;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static base.DataStore.*;
 import static component.loginTest.service_constant.LoginConstant.IS_MENAGE;
@@ -19,8 +27,9 @@ import static utils.set.PropertiesUtil.get;
 
 @Data
 @Accessors(fluent = true)
+//继承不会执行父类的注解测试
 public class LoginCaseExtend extends LoginCase {
-
+    @NotNull(asserts = SuccessAssertDefault.class)
     public Integer id;
 
     public LoginCaseExtend() {
@@ -29,7 +38,8 @@ public class LoginCaseExtend extends LoginCase {
 
     @BaseCaseData
     @MultiRequest(multiThreadNum = 10)
-    @DataFactory(listApi = ListCase.class, des = "数据被创建")
+    @DataFactory(listApi = ListCase.class, des = "数据被创建LoginCaseExtend")
+    @AutoTest
     public LoginCase rightLoginCaseExtend() {
         id = 1;
         loginName = get("g_loginName");
@@ -39,5 +49,39 @@ public class LoginCaseExtend extends LoginCase {
         userName = RandomUtil.getString();
         assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
         return this;
+    }
+
+    //调试注解测试
+    @SneakyThrows
+    public static void main(String[] args) {
+        //注解测试
+        String className = Thread.currentThread().getStackTrace()[1].getClassName();
+        Class<? extends BaseCase> BaseCaseClass = (Class<? extends BaseCase>) Class.forName(className);
+
+        AnnotationServer annotationServer = new AnnotationServer();
+        List<AnnotationTestEntity> annotationTestEntities = annotationServer.createAnnotationTestEntity(BaseCaseClass);
+
+        if (annotationTestEntities != null && annotationTestEntities.size() > 0) {
+            //只想执行某个注解可以这么写，想执行全部则注释掉这个过滤
+            //annotationTestEntities = annotationTestEntities.stream()
+            //        .filter(x -> x.annotation.annotationType().getSimpleName().equals(AutoTest.class.getSimpleName()))
+            //        .collect(Collectors.toList());
+            //第一个对象必须执行依赖测试
+            annotationTestEntities.get(0).setExecuteDataDependMethod(true);
+
+            for (AnnotationTestEntity testEntity : annotationTestEntities) {
+                annotationServer.executeAnnotationTest(testEntity);
+            }
+        }
+
+        System.out.println("-----------------------------------执行DataFactory-----------------------------------");
+
+        DataFactoryTest dataFactoryTest = new DataFactoryTest();
+        List<DataFactoryEntity> dataFactoryBaseCase = dataFactoryTest.getDataFactoryBaseCase(BaseCaseClass);
+        if (dataFactoryBaseCase != null && dataFactoryBaseCase.size() > 0) {
+            for (DataFactoryEntity dataFactoryEntity : dataFactoryBaseCase) {
+                dataFactoryTest.executeDataFactoryTest(dataFactoryEntity);
+            }
+        }
     }
 }

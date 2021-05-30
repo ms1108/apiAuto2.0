@@ -7,12 +7,13 @@ import config.header.IHeaders;
 import config.preparamhandle.IParamPreHandle;
 import config.preparamhandle.ParamPreHandleImpl;
 import lombok.Getter;
-import org.testng.Assert;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @Getter
 public enum ComponentDefaultInfo {
@@ -21,7 +22,7 @@ public enum ComponentDefaultInfo {
     private Class<? extends IHeaders> iHeaders;
     private Class<? extends IParamPreHandle> iParamPreHandle;
     private Class<? extends AssertMethod> assertMethod;
-    private Map<ComponentDefaultInfo, List<String>> enumAndPackageNames;
+    private static Map<String, ComponentDefaultInfo> packageNameAndEnum = new HashMap<>();
 
     ComponentDefaultInfo(String packageName, Class<? extends IHeaders> iHeaders, Class<? extends IParamPreHandle> iParamPreHandle, Class<? extends AssertMethod> assertMethod) {
         this.packageName = packageName;
@@ -43,6 +44,10 @@ public enum ComponentDefaultInfo {
 
     //模糊匹配，谁命中率高就返回谁
     public static ComponentDefaultInfo getModuleEnum(String packageName) {
+        //获取历史记录的感觉
+        if (packageNameAndEnum.get(packageName) != null) {
+            return packageNameAndEnum.get(packageName);
+        }
         //枚举存的包名，和传进来的包名做对比，那个看命中率高就返回那个枚举
         int similarity = 0;
         ComponentDefaultInfo possibleEnum = null;
@@ -57,9 +62,7 @@ public enum ComponentDefaultInfo {
                 possibleEnum = value;
             }
         }
-        if (possibleEnum == null) {
-            Assert.fail(packageName + "，该包没有配置枚举");
-        }
+        packageNameAndEnum.put(packageName, possibleEnum);
         return possibleEnum;
     }
 }
