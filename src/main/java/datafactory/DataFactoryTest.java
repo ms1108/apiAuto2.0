@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static utils.set.MvnArgsUtil.data_factory_list_api;
 
 public class DataFactoryTest extends ApiTest {
-    public List<DataFactoryEntity> dataFactoryBaseCase;
+    public static List<DataFactoryEntity> dataFactoryBaseCase;
 
     @Test
     public void createData() {
