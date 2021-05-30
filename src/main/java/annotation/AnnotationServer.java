@@ -3,7 +3,7 @@ package annotation;
 import annotation.annotations.*;
 import api.ApiTest;
 import base.BaseCase;
-import base.CommandLogic;
+import base.CommonLogic;
 import lombok.SneakyThrows;
 import utils.ClassFinderUtil;
 import utils.ReportUtil;
@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class AnnotationServer extends CommandLogic {
+public class AnnotationServer extends CommonLogic {
 
     private String rootPath = "";
     boolean executeDataDependMethod;
@@ -48,10 +48,10 @@ public class AnnotationServer extends CommandLogic {
                 if (currentClassName.equals(BaseCase.class.getSimpleName())
                         || currentClassName.equals(Object.class.getSimpleName())
                         || currentClassName.equals(ApiTest.class.getSimpleName())
-                        || currentClassName.equals(CommandLogic.class.getSimpleName())) {
+                        || currentClassName.equals(CommonLogic.class.getSimpleName())) {
                     continue;
                 }
-                if (method.isAnnotationPresent(DataDepend.class)) {
+                if (method.isAnnotationPresent(annotation.annotations.DataDepend.class)) {
                     dataDependMethod = method;
                 }
                 //同时限定方法为该类下的
@@ -80,7 +80,7 @@ public class AnnotationServer extends CommandLogic {
                 annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
                 //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
                 if (dataDependMethod!=null)
-                    executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
+                    executeDataDependMethod = dataDependMethod.getAnnotation(annotation.annotations.DataDepend.class).isAlwaysExecute();
                 annotationTestEntities.add(annotationTestEntity);
             }
             for (Method method : multiRequestMethods) {
@@ -94,7 +94,7 @@ public class AnnotationServer extends CommandLogic {
                 annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
                 //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
                 if (dataDependMethod!=null)
-                    executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
+                    executeDataDependMethod = dataDependMethod.getAnnotation(annotation.annotations.DataDepend.class).isAlwaysExecute();
                 annotationTestEntities.add(annotationTestEntity);
 
             }
@@ -109,7 +109,7 @@ public class AnnotationServer extends CommandLogic {
             if (currentClassName.equals(BaseCase.class.getSimpleName())
                     || currentClassName.equals(Object.class.getSimpleName())
                     || currentClassName.equals(ApiTest.class.getSimpleName())
-                    || currentClassName.equals(CommandLogic.class.getSimpleName())) {
+                    || currentClassName.equals(CommonLogic.class.getSimpleName())) {
                 continue;
             }
             if (field.isAnnotationPresent(Blank.class)) {
@@ -203,7 +203,7 @@ public class AnnotationServer extends CommandLogic {
             annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
             //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
             if (dataDependMethod!=null)
-            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
+            executeDataDependMethod = dataDependMethod.getAnnotation(annotation.annotations.DataDepend.class).isAlwaysExecute();
             fieldAndMethodSameGroupEntities.add(annotationTestEntity);
         }
         //处理没有基础数据注解的类，基础数据为该类的无参初始化
@@ -218,7 +218,7 @@ public class AnnotationServer extends CommandLogic {
             //第一个实体一定记录的是执行依赖，切换另一个BaseCase类则executeDataDependMethod被重新赋值为true
             annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
             //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
-            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
+            executeDataDependMethod = dataDependMethod.getAnnotation(annotation.annotations.DataDepend.class).isAlwaysExecute();
             fieldAndMethodSameGroupEntities.add(annotationTestEntity);
         }
         return fieldAndMethodSameGroupEntities;

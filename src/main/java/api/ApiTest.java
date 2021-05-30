@@ -19,7 +19,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static utils.FileUtil.writeFile;
 
 public class ApiTest {
-    //该类中的属性一定要写私有的如下,因为在实体类转json串时公有属性也会被写入json中。并且不能加上对应各get方法
+    //被BaseCase类继承了的类中的属性一定要写私有的如下,因为在实体类转json串时公有属性也会被写入json中。并且不能加上对应各get方法
     //private Integer test = 1;
 
     public Response apiTest(BaseCase baseCase) {
@@ -74,7 +74,7 @@ public class ApiTest {
             if (headerDisposition != null) {
                 fileType = headerDisposition.substring(headerDisposition.lastIndexOf("."), headerDisposition.length() - 1);
             }
-            String contentPath = DownloadDir + RandomUtil.getString() + fileType;
+            String contentPath = downloadDir + RandomUtil.getString() + fileType;
             Assert.assertTrue(writeFile(response.getBody().asInputStream(), contentPath), "下载文件失败");
             res = "{\"filePath\":\"" + contentPath + "\"}";
         }

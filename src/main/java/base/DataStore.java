@@ -16,14 +16,16 @@ public class DataStore {
     //存储请求信息
     public static Map<String, JsonPath> req = new HashMap<>();
     //需要在方法间传递的参数,主要用于sql读取到数据后，其他方法能读取到该数据，或者在数据依赖中直接对字段赋值就不用这么传了
-    public static Map<String,Object> args;
+    public static Map<String, Object> args;
     public static String currentLoginName;
     public static String currentLoginPwd;
     public static String token;
     public static String defaultAssertPath = "code";
     public static Object defaultAssertValue = 0;
     public static boolean isOpenAnnotation = true;
-    public static String DownloadDir = "src/main/resources/download";
+    public static String downloadDir = "src/main/resources/download";
+    //存储原始的依赖实体
+    public static Map<String, CommonLogic> nameAndDependOriginal = new HashMap<>();
 
     //获取响应中的值
     public static <T> T getResponseValue(IServiceMap iServiceMap, String path) {

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 @Data
-public class BaseCase extends CommandLogic {
+public class BaseCase extends CommonLogic {
     //拼接路径参数
     public String pathParam;//开头需要携带斜杠'/'
     //接口地址
@@ -28,4 +28,7 @@ public class BaseCase extends CommandLogic {
         iParamPreHandle = defaultImplEnum.getIParamPreHandle().newInstance();
         assertMethod = defaultImplEnum.getAssertMethod().newInstance();
     }
+
+    @Override
+    public void dependConstant() {}
 }
