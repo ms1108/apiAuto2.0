@@ -10,6 +10,10 @@ import java.lang.annotation.*;
 @Inherited
 public @interface DataFactory {
     String des() default "";
+
     //创建数据后数据所在的列表
     Class<? extends BaseCase> listApi() default BaseCase.class;
+
+    //关闭断言
+    boolean isOpenAssert() default false;
 }

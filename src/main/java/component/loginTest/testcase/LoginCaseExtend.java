@@ -5,10 +5,7 @@ import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import api.RequestData;
 import base.BaseCase;
-import component.loginTest.service_constant.LoginConstant;
-import component.loginTest.service_constant.LoginService;
 import config.asserts.*;
-import config.header.DefaultHeaders;
 import datafactory.DataFactoryEntity;
 import datafactory.DataFactoryTest;
 import datafactory.annotation.DataFactory;
@@ -18,9 +15,7 @@ import lombok.experimental.Accessors;
 import utils.RandomUtil;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static base.DataStore.*;
 import static component.loginTest.service_constant.LoginConstant.IS_MENAGE;
 import static component.loginTest.service_constant.LoginService.Login;
 import static utils.set.PropertiesUtil.get;
@@ -34,6 +29,12 @@ public class LoginCaseExtend extends LoginCase {
 
     public LoginCaseExtend() {
         serverMap = Login;
+    }
+
+    @DataDepend(isAlwaysExecute = true)
+    public void dependBeforeClass() {
+        //当前置调用链过长时建议封装到CommonLogic类中方便其他接口去使用，或者直接new对应的BaseCase类执行接口
+        apiTest(new RequestData(new ConfigCase().dependCase()));
     }
 
     @BaseCaseData

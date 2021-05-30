@@ -77,6 +77,10 @@ public class AnnotationServer extends CommandLogic {
                 annotationTestEntity.annotation = annotation;
                 annotationTestEntity.baseCaseClass = baseCaseClass;
                 annotationTestEntity.iAnnotationTestMethod = annotation.testMethod();
+                annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
+                //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
+                if (dataDependMethod!=null)
+                    executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
                 annotationTestEntities.add(annotationTestEntity);
             }
             for (Method method : multiRequestMethods) {
@@ -87,6 +91,10 @@ public class AnnotationServer extends CommandLogic {
                 annotationTestEntity.annotation = annotation;
                 annotationTestEntity.baseCaseClass = baseCaseClass;
                 annotationTestEntity.iAnnotationTestMethod = annotation.testMethod();
+                annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
+                //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
+                if (dataDependMethod!=null)
+                    executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
                 annotationTestEntities.add(annotationTestEntity);
 
             }
@@ -195,7 +203,7 @@ public class AnnotationServer extends CommandLogic {
             annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
             //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
             if (dataDependMethod!=null)
-            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).value();
+            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
             fieldAndMethodSameGroupEntities.add(annotationTestEntity);
         }
         //处理没有基础数据注解的类，基础数据为该类的无参初始化
@@ -210,7 +218,7 @@ public class AnnotationServer extends CommandLogic {
             //第一个实体一定记录的是执行依赖，切换另一个BaseCase类则executeDataDependMethod被重新赋值为true
             annotationTestEntity.executeDataDependMethod = executeDataDependMethod;
             //修改executeDataDependMethod为注解中携带的值，之后的实体是否执行依赖由注解的值决定
-            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).value();
+            executeDataDependMethod = dataDependMethod.getAnnotation(DataDepend.class).isAlwaysExecute();
             fieldAndMethodSameGroupEntities.add(annotationTestEntity);
         }
         return fieldAndMethodSameGroupEntities;

@@ -58,7 +58,7 @@ public class DataFactoryTest extends ApiTest {
         DataFactory annotation = dataFactoryEntity.getDataFactoryMethod().getAnnotation(DataFactory.class);
         ReportUtil.log("DataFactoryDes    : " + annotation.des());
         BaseCase dataFactoryBaseCase = (BaseCase) dataFactoryEntity.getDataFactoryMethod().invoke(baseCase);
-        apiTest(new RequestData(dataFactoryBaseCase));
+        apiTest(new RequestData(dataFactoryBaseCase).setOpenAssert(annotation.isOpenAssert()));
     }
 
     public List<DataFactoryEntity> getDataFactoryBaseCase(String packageName) {
