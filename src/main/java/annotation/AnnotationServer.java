@@ -261,4 +261,9 @@ public class AnnotationServer extends CommonLogic {
         IAnnotationTestMethod instance = annotationTestEntity.iAnnotationTestMethod.newInstance();
         instance.testMethod(annotationTestEntity);
     }
+
+    @Override
+    public void dependConstant() {
+
+    }
 }
