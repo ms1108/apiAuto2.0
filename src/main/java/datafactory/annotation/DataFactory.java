@@ -1,7 +1,6 @@
 package datafactory.annotation;
 
 import base.BaseCase;
-import component.loginTest.service_constant.LoginService;
 
 import java.lang.annotation.*;
 

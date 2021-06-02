@@ -1,13 +1,13 @@
 package component.loginTest.testcase;
 
 import base.BaseCase;
-import component.loginTest.service_constant.LoginService;
+import component.loginTest.service_constant.DemoService;
 
 public class ConfigCase extends BaseCase {
     public String depend;
 
     public ConfigCase() {
-        serverMap = LoginService.Config;
+        serverMap = DemoService.Config;
     }
 
     public void dataDepend() {

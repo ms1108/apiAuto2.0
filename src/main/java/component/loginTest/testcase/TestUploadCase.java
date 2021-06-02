@@ -1,11 +1,11 @@
 package component.loginTest.testcase;
 
 import base.UploadCase;
-import component.loginTest.service_constant.LoginService;
+import component.loginTest.service_constant.DemoService;
 
 public class TestUploadCase extends UploadCase {
     public TestUploadCase() {
-        serverMap = LoginService.Upload;
+        serverMap = DemoService.Upload;
     }
 
     public TestUploadCase uploadCase() {

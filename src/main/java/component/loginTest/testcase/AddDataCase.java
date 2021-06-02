@@ -5,8 +5,8 @@ import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
 import base.IServiceMap;
-import component.loginTest.service_constant.LoginConstant;
-import component.loginTest.service_constant.LoginService;
+import component.loginTest.service_constant.DemoConstant;
+import component.loginTest.service_constant.DemoService;
 import config.asserts.*;
 import config.header.DefaultHeaders;
 import datafactory.DataFactoryEntity;
@@ -20,12 +20,12 @@ import utils.RandomUtil;
 import java.util.List;
 
 import static base.DataStore.*;
-import static component.loginTest.service_constant.LoginConstant.IS_MENAGE;
-import static component.loginTest.service_constant.LoginService.Login;
+import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
+import static component.loginTest.service_constant.DemoService.Login;
 import static utils.set.PropertiesUtil.get;
 
 @Data
-public class LoginCase extends BaseCase {
+public class AddDataCase extends BaseCase {
     public IServiceMap serverMap = Login;
 
     @Unique(assertFail = SuccessAssertDefault.class, group = "1")
@@ -77,7 +77,7 @@ public class LoginCase extends BaseCase {
     @BaseCaseData
     @MultiRequest(multiThreadNum = 10)
     @DataFactory(listApi = ListCase.class, des = "数据被创建")
-    public LoginCase rightLoginCase() {
+    public AddDataCase rightCase() {
         loginName = get("g_loginName");
         pwd = get("g_loginPwd");
         type = new Type().role(new TypeIn().TypeIn(IS_MENAGE));
@@ -89,10 +89,10 @@ public class LoginCase extends BaseCase {
 
     @BaseCaseData(group = "1")
     @DataFactory(listApi = ListCase.class, des = "数据被创建2")
-    public LoginCase rightLoginCase1() {
+    public AddDataCase rightCase1() {
         loginName = get("g_loginName");
         pwd = get("g_loginPwd");
-        type = new Type().role(new TypeIn().TypeIn(LoginConstant.No_MENAGE));
+        type = new Type().role(new TypeIn().TypeIn(DemoConstant.No_MENAGE));
         depend = "123456";
         userName = RandomUtil.getString();
         assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
@@ -100,26 +100,26 @@ public class LoginCase extends BaseCase {
         return this;
     }
 
-    public LoginCase errorLoginCase() {
-        LoginCase loginCase = rightLoginCase();
-        loginCase.pwd = "";
+    public AddDataCase errorCase() {
+        AddDataCase addDataCase = rightCase();
+        addDataCase.pwd = "";
         return this;
     }
 
-    @AutoTest(des = "依赖测试")
-    public LoginCase dependCase() {
-        LoginCase loginCase = rightLoginCase();
+    @AutoTest(des = "注解自动测试")
+    public AddDataCase dependCase() {
+        AddDataCase addDataCase = rightCase();
         //从其他的请求参数中获取值
-        loginCase.depend = getRequestValue(LoginService.Config, "depend");
+        addDataCase.depend = getRequestValue(DemoService.Config, "depend");
         return this;
     }
 
-    public LoginCase dependCase1() {
-        LoginCase loginCase = rightLoginCase();
-        loginCase.depend = null;
+    public AddDataCase dependCase1() {
+        AddDataCase addDataCase = rightCase();
+        addDataCase.depend = null;
         //从其他响应中获取值，需要事先调用相应接口
-        loginCase.depend = getResponseValue(LoginService.Config, "res.depend");
-        loginCase.depend = invokeApiGetValue(new ConfigCase(), "res.depend");
+        addDataCase.depend = getResponseValue(DemoService.Config, "res.depend");
+        addDataCase.depend = invokeApiGetValue(new ConfigCase(), "res.depend");
         return this;
     }
 

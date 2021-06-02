@@ -2,7 +2,7 @@
 <suite name="Second suite" verbose="1" >
     <test name = "allTestsInAClass" >
         <classes>
-            <class name="component.loginTest.LoginTest"/>
+            <class name="component.loginTest.DemoTest"/>
         </classes>
     </test>
 </suite>

@@ -3,8 +3,8 @@ package component.loginTest;
 import api.RequestData;
 import annotation.AnnotationTest;
 import component.loginTest.testcase.ConfigCase;
-import component.loginTest.testcase.LoginCase;
-import component.loginTest.testcase.LoginCaseExtend;
+import component.loginTest.testcase.AddDataCase;
+import component.loginTest.testcase.AddDataCaseExtend;
 import component.loginTest.testcase.TestUploadCase;
 import config.asserts.EqualAssert;
 import config.asserts.SuccessAssertDefault;
@@ -17,7 +17,7 @@ import static base.DataStore.dependChainDIY;
 /**
  * Test类，建议用于多流程，多场景测试
  */
-public class LoginTest extends AnnotationTest {
+public class DemoTest extends AnnotationTest {
 
     //更多断言方法http://testingpai.com/article/1599472747188
     @Test
@@ -28,9 +28,9 @@ public class LoginTest extends AnnotationTest {
                 System.out.println("自定义依赖调用链");
             }
         });
-        LoginCase loginCase = new LoginCase();
-        loginCase.dataDepend();
-        apiTest(new RequestData(loginCase.rightLoginCase())
+        AddDataCase addDataCase = new AddDataCase();
+        addDataCase.dataDepend();
+        apiTest(new RequestData(addDataCase.rightCase())
                 .setStepDes("这是我的测试步骤")
                 .setAssertMethod(new SuccessAssertDefault()
                         .setAssert(new EqualAssert("res", "test success"))));
@@ -49,7 +49,7 @@ public class LoginTest extends AnnotationTest {
     @Test
     public void test11() {
         apiTest(new RequestData(new ConfigCase().config()));
-        apiTest(new LoginCase().rightLoginCase());
+        apiTest(new AddDataCase().rightCase());
         //.then().body("res", equalTo("test success"));
 
         ////从响应中取值,常用于case类中
@@ -64,19 +64,19 @@ public class LoginTest extends AnnotationTest {
 
     @Test
     public void test2() {
-        apiTest(new RequestData(new LoginCase().errorLoginCase()));
+        apiTest(new RequestData(new AddDataCase().errorCase()));
     }
 
     @Test
     public void test3() {
         apiTest(new RequestData(new ConfigCase().config()));
-        apiTest(new RequestData(new LoginCase().dependCase()));
+        apiTest(new RequestData(new AddDataCase().dependCase()));
     }
 
     @Test
     public void test4() {
         apiTest(new RequestData(new ConfigCase().config()));
-        apiTest(new RequestData(new LoginCase().dependCase1()));
+        apiTest(new RequestData(new AddDataCase().dependCase1()));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class LoginTest extends AnnotationTest {
 
     @Test
     public void testextend() {
-        LoginCaseExtend loginCaseExtend = new LoginCaseExtend();
+        AddDataCaseExtend loginCaseExtend = new AddDataCaseExtend();
         loginCaseExtend.rightLoginCaseExtend();
         apiTest(new RequestData(loginCaseExtend));
     }

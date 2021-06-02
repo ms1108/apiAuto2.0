@@ -1,15 +1,12 @@
 package base;
 
 import api.ApiTest;
-import component.loginTest.testcase.ConfigCase;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import lombok.SneakyThrows;
 import org.testng.Assert;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +31,7 @@ public class DataStore {
 
     //获取响应中的值
     public static <T> T getResponseValue(IServiceMap iServiceMap, String path) {
-        Response response = res.get(iServiceMap.getUri());
+        Response response = res.get(iServiceMap.getUUID());
         if (response == null) {
             Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
         }
@@ -48,7 +45,7 @@ public class DataStore {
 
     //获取所有响应求头
     public static Headers getResponseHeaders(IServiceMap iServiceMap) {
-        Response response = res.get(iServiceMap.getUri());
+        Response response = res.get(iServiceMap.getUUID());
         if (response == null) {
             Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
         }
@@ -71,7 +68,7 @@ public class DataStore {
 
     //获取cookies
     public static <T> T getResponseCookies(IServiceMap iServiceMap) {
-        Response response = res.get(iServiceMap.getUri());
+        Response response = res.get(iServiceMap.getUUID());
         if (response == null) {
             Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
         }
@@ -96,7 +93,7 @@ public class DataStore {
 
     //获取请求过的数据
     public static <T> T getRequestValue(IServiceMap iServiceMap, String path) {
-        JsonPath jsonPath = req.get(iServiceMap.getUri());
+        JsonPath jsonPath = req.get(iServiceMap.getUUID());
         if (jsonPath == null) {
             Assert.fail(iServiceMap.getUri() + ",接口无请求数据");
         }

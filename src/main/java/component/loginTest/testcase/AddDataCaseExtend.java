@@ -15,18 +15,18 @@ import utils.RandomUtil;
 
 import java.util.List;
 
-import static component.loginTest.service_constant.LoginConstant.IS_MENAGE;
-import static component.loginTest.service_constant.LoginService.Login;
+import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
+import static component.loginTest.service_constant.DemoService.Login;
 import static utils.set.PropertiesUtil.get;
 
 @Data
 @Accessors(fluent = true)
 //继承不会执行父类的注解测试
-public class LoginCaseExtend extends LoginCase {
+public class AddDataCaseExtend extends AddDataCase {
     @NotNull(asserts = SuccessAssertDefault.class)
     public Integer id;
 
-    public LoginCaseExtend() {
+    public AddDataCaseExtend() {
         serverMap = Login;
     }
 
@@ -41,7 +41,7 @@ public class LoginCaseExtend extends LoginCase {
     @MultiRequest(multiThreadNum = 10)
     @DataFactory(listApi = ListCase.class, des = "数据被创建LoginCaseExtend")
     @AutoTest
-    public LoginCase rightLoginCaseExtend() {
+    public AddDataCase rightLoginCaseExtend() {
         id = 1;
         loginName = get("g_loginName");
         pwd = get("g_loginPwd");
