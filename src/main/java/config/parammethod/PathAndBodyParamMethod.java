@@ -1,4 +1,4 @@
-package config.paramMethod;
+package config.parammethod;
 
 import api.RequestData;
 import com.alibaba.fastjson.JSONObject;

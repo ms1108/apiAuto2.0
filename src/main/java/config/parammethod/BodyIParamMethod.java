@@ -1,11 +1,12 @@
-package config.paramMethod;
+package config.parammethod;
 
 import api.RequestData;
 import io.restassured.specification.RequestSpecification;
 
-public class QueryIParamMethod implements IParamMethod {
+public class BodyIParamMethod implements IParamMethod {
+
     @Override
     public RequestSpecification paramMethodBuild(RequestSpecification specification, RequestData requestData) {
-        return specification.queryParam(requestData.getParam());
+        return specification.body(requestData.getParam());
     }
 }

@@ -58,7 +58,7 @@ public class ApiTest {
             }
         }
         //发送请求
-        Response response = requestData.getIRequestMethod().requestMethod(specification, requestData);
+        Response response = requestData.getInvokeRequest().invokeRequest(specification, requestData);
         //存储请求,因为取出值时是通过severMap中的Uri所以这样存的时候也是用这个存。在pathParam的情况下requestData中的Uri是会被修改的
         DataStore.req.put(requestData.getServerMap().getUUID(), from(requestData.getParamData()));
         //存储响应

@@ -1,12 +1,12 @@
-package config.requestMethod;
+package config.invokerequest;
 
 import api.RequestData;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class DefaultRequestMethod implements IRequestMethod {
+public class DefaultInvokeRequest implements InvokeRequest {
     @Override
-    public Response requestMethod(RequestSpecification specification, RequestData requestData) {
+    public Response invokeRequest(RequestSpecification specification, RequestData requestData) {
         return specification.request(requestData.getMethodAndRequestType().getApiMethod(), requestData.getUri());
     }
 }

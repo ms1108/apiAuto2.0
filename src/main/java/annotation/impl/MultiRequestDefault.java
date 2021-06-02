@@ -19,7 +19,7 @@ public class MultiRequestDefault extends IAnnotationTestMethod {
                 ",执行@" + MultiRequest.class.getSimpleName() + ",方法名:" + annotationTestEntity.method.getName() + "，" + annotation.des();
         RequestData requestData = new RequestData(baseCaseMethod)
                 .setMultiThreadNum(annotation.multiThreadNum())
-                .setIRequestMethod(annotation.iRequest().newInstance())
+                .setInvokeRequest(annotation.iRequest().newInstance())
                 .setStepDes(des)
                 .setOpenAssert(annotation.isOpenAssert())
                 .setSleep(annotation.sleep());

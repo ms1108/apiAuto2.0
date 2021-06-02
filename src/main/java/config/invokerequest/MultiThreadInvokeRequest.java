@@ -1,7 +1,6 @@
-package config.requestMethod;
+package config.invokerequest;
 
 import api.RequestData;
-import config.asserts.SuccessAssertDefault;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.SneakyThrows;
@@ -15,15 +14,15 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static io.restassured.RestAssured.given;
 
-public class MultiThreadRequestMethod implements Runnable, IRequestMethod {
+public class MultiThreadInvokeRequest implements Runnable, InvokeRequest {
     private RequestData requestData;
     private List<Response> responses = new ArrayList<>();
     private Lock lock = new ReentrantLock();//锁要在属性中new，不能在run方法中new，不然锁无效，因为多个线程就new出了多个锁不合理
 
-    public MultiThreadRequestMethod() {
+    public MultiThreadInvokeRequest() {
     }
 
-    public MultiThreadRequestMethod(RequestData requestData) {
+    public MultiThreadInvokeRequest(RequestData requestData) {
         this.requestData = requestData;
     }
 
@@ -49,13 +48,13 @@ public class MultiThreadRequestMethod implements Runnable, IRequestMethod {
 
     @SneakyThrows
     @Override
-    public Response requestMethod(RequestSpecification specification, RequestData requestData) {
+    public Response invokeRequest(RequestSpecification specification, RequestData requestData) {
         int multiThreadNum = requestData.getMultiThreadNum();
-        MultiThreadRequestMethod multiThreadRequest = new MultiThreadRequestMethod(requestData);
+        MultiThreadInvokeRequest multiThreadInvokeRequest = new MultiThreadInvokeRequest(requestData);
         List<Thread> threads = new ArrayList<>();
         //通过起多线程同时快速的向后端发起多个相同参数的请求
         for (int i = 0; i < multiThreadNum; i++) {
-            Thread thread = new Thread(multiThreadRequest);
+            Thread thread = new Thread(multiThreadInvokeRequest);
             thread.start();
             threads.add(thread);
         }
@@ -74,6 +73,6 @@ public class MultiThreadRequestMethod implements Runnable, IRequestMethod {
             //已经断言了外边不用再断言
             requestData.setOpenAssert(false);
         }
-        return multiThreadRequest.responses.get(0);
+        return multiThreadInvokeRequest.responses.get(0);
     }
 }

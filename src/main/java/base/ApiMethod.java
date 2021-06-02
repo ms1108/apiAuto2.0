@@ -1,6 +1,6 @@
 package base;
 
-import config.paramMethod.*;
+import config.parammethod.*;
 import lombok.SneakyThrows;
 
 public enum ApiMethod {

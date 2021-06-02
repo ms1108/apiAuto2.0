@@ -2,8 +2,8 @@ package annotation.annotations;
 
 import annotation.IAnnotationTestMethod;
 import annotation.impl.MultiRequestDefault;
-import config.requestMethod.IRequestMethod;
-import config.requestMethod.MultiThreadRequestMethod;
+import config.invokerequest.InvokeRequest;
+import config.invokerequest.MultiThreadInvokeRequest;
 
 import java.lang.annotation.*;
 /**
@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 public @interface MultiRequest {
     int multiThreadNum() default 2;
 
-    Class<? extends IRequestMethod> iRequest() default MultiThreadRequestMethod.class;
+    Class<? extends InvokeRequest> iRequest() default MultiThreadInvokeRequest.class;
 
     String des() default "";
 

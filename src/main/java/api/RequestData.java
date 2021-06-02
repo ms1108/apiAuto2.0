@@ -9,8 +9,8 @@ import config.asserts.FailAssetDefault;
 import config.header.IHeaders;
 import config.preparamhandle.IParamPreHandle;
 import config.preparamhandle.ParamPreHandleBlankImpl;
-import config.requestMethod.DefaultRequestMethod;
-import config.requestMethod.IRequestMethod;
+import config.invokerequest.DefaultInvokeRequest;
+import config.invokerequest.InvokeRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -58,7 +58,7 @@ public class RequestData {
     //幂等请求线程个数
     private int multiThreadNum;
     //用于区分普通请求和幂等请求
-    private IRequestMethod iRequestMethod = new DefaultRequestMethod();
+    private InvokeRequest invokeRequest = new DefaultInvokeRequest();
     //用于拼接默认的请求字段，比如 {a:{k:v}},a对象每个请求都有
     private IParamPreHandle iParamPreHandle;
 
