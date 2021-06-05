@@ -133,6 +133,7 @@ public class AddDataCase extends BaseCase {
     @SneakyThrows
     public static void main(String[] args) {
         //注解测试
+        //获取当前类
         String className = Thread.currentThread().getStackTrace()[1].getClassName();
         Class<? extends BaseCase> BaseCaseClass = (Class<? extends BaseCase>) Class.forName(className);
 

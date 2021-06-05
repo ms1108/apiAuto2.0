@@ -49,17 +49,25 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.68</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+        <!--邮箱-->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
+        <!--处理zip包-->
         <dependency>
             <groupId>net.lingala.zip4j</groupId>
             <artifactId>zip4j</artifactId>
             <version>1.3.2</version>
         </dependency>
+        <!--连接mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
     </dependencies>
 
     <build>

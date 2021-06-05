@@ -37,8 +37,12 @@ public class PropertiesUtil {
     }
 
     public static String get(String key) {
-        String value = props.getProperty(key.trim(), "");
-        return value.trim();
+        String value = props.getProperty(key.trim(), "").trim();
+        //防止在配置中写了引号
+        if (value.startsWith("\"")) {
+            value = value.substring(1, value.length() - 1);
+        }
+        return value;
     }
 
 }
