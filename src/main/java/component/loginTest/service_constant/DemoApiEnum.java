@@ -1,40 +1,40 @@
 package component.loginTest.service_constant;
 
 import base.ApiMethod;
-import base.IServiceMap;
+import base.IApi;
 import utils.set.PropertiesUtil;
 
 import java.util.UUID;
 
-public enum DemoService implements IServiceMap {
-    Login("/test", "jsonschema/loginTest/login.json", "component/login"),
+public enum DemoApiEnum implements IApi {
+    AddData("/test", "jsonschema/test/test.json", "addData"),
     Config("/depend", "", "depend"),
     Upload("/upload", ApiMethod.UPLOAD, "", "upload"),
     List("/list", ApiMethod.GET, "", "list");
 
 
-    DemoService(String host, String uri, String jsonSchemaPath, String des) {
-        this(host, uri, ApiMethod.POST, jsonSchemaPath, des);
+    DemoApiEnum(String host, String apiPath, String jsonSchemaPath, String des) {
+        this(host, apiPath, ApiMethod.POST, jsonSchemaPath, des);
     }
 
-    DemoService(String uri, String jsonSchemaPath, String des) {
-        this("g_host", uri, ApiMethod.POST, jsonSchemaPath, des);
+    DemoApiEnum(String apiPath, String jsonSchemaPath, String des) {
+        this("g_host", apiPath, ApiMethod.POST, jsonSchemaPath, des);
     }
 
-    DemoService(String uri, ApiMethod methodAndRequestType, String jsonSchemaPath, String des) {
-        this("g_host", uri, methodAndRequestType, jsonSchemaPath, des);
+    DemoApiEnum(String apiPath, ApiMethod methodAndRequestType, String jsonSchemaPath, String des) {
+        this("g_host", apiPath, methodAndRequestType, jsonSchemaPath, des);
     }
 
-    DemoService(String host, String uri, ApiMethod methodAndRequestType, String jsonSchemaPath, String des) {
+    DemoApiEnum(String host, String apiPath, ApiMethod methodAndRequestType, String jsonSchemaPath, String des) {
         this.host = PropertiesUtil.get(host);
-        this.uri = uri;
+        this.apiPath = apiPath;
         this.methodAndRequestType = methodAndRequestType;
         this.jsonSchemaPath = jsonSchemaPath;
         this.des = des;
     }
 
     private String host;
-    private String uri;
+    private String apiPath;
     private ApiMethod methodAndRequestType;
     private String jsonSchemaPath;
     private String des;
@@ -47,8 +47,8 @@ public enum DemoService implements IServiceMap {
     }
 
     @Override
-    public String getUri() {
-        return uri;
+    public String getApiPath() {
+        return apiPath;
     }
 
     @Override

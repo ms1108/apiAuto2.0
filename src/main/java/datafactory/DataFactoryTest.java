@@ -35,7 +35,7 @@ public class DataFactoryTest extends ApiTest {
                 if (listApi.endsWith("/")) {
                     listApi = listApi.substring(0, listApi.length() - 1);
                 }
-                return annotationInfo.listApi().newInstance().getServerMap().getUri().contains(listApi);
+                return annotationInfo.listApi().newInstance().getIApi().getApiPath().contains(listApi);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,7 @@
 package annotation.annotations;
 
 import java.lang.annotation.*;
+
 /**
  * 注册接口，用于前端获取该接口的基础描述
  */
@@ -17,6 +18,6 @@ public @interface Registry {
     //是否可用
     boolean isValid() default true;
 
-    //接口描述通过serviceMap获取
-
+    //接口描述
+    String des() default "";
 }

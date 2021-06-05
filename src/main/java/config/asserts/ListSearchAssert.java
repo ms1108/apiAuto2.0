@@ -28,10 +28,10 @@ public class ListSearchAssert extends AssertMethod {
         if (expectValue != null) {
             validatableResponse.body(containsString(expectValue))
                     .body(listRootPath + ".size()",
-                            describedAs("搜索后期望" + requestData.getUri() + "的列表长度为:" + expectListLen, equalTo(expectListLen)));
+                            describedAs("搜索后期望" + requestData.getUrl() + "的列表长度为:" + expectListLen, equalTo(expectListLen)));
         } else {
             validatableResponse.body(listRootPath + ".size()",
-                    describedAs(requestData.getUri()+",期望列表接口的长度不为:" + expectListLen, not(equalTo(expectListLen))));
+                    describedAs(requestData.getUrl()+",期望列表接口的长度不为:" + expectListLen, not(equalTo(expectListLen))));
 
         }
 

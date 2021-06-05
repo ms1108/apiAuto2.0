@@ -1,13 +1,13 @@
 package component.loginTest.testcase;
 
 import base.BaseCase;
-import component.loginTest.service_constant.DemoService;
+import component.loginTest.service_constant.DemoApiEnum;
 
 public class ConfigCase extends BaseCase {
     public String depend;
 
     public ConfigCase() {
-        serverMap = DemoService.Config;
+        iApi = DemoApiEnum.Config;
     }
 
     public void dataDepend() {

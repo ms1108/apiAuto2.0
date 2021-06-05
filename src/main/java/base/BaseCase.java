@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 @Data
-public abstract class BaseCase extends ApiTest {
+public class BaseCase extends ApiTest {
     //拼接路径参数
     public String pathParam;//开头需要携带斜杠'/'
     //接口地址
-    public IServiceMap serverMap;
+    public IApi iApi;
     //请求头
     public IHeaders headers;
     //参数前置处理
@@ -31,7 +31,7 @@ public abstract class BaseCase extends ApiTest {
     }
 
     //每个接口的依赖都作为一个实体存储，使用时可以动态修改
-    public abstract void dataDepend();
+    //public abstract void dataDepend();
 
     //在数据依赖中调用其他接口时尽量使用该方法进行new对象，可实现动态修改依赖的实现
     @SneakyThrows

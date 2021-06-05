@@ -16,7 +16,7 @@ import utils.RandomUtil;
 import java.util.List;
 
 import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
-import static component.loginTest.service_constant.DemoService.Login;
+import static component.loginTest.service_constant.DemoApiEnum.AddData;
 import static utils.set.PropertiesUtil.get;
 
 @Data
@@ -27,7 +27,7 @@ public class AddDataCaseExtend extends AddDataCase {
     public Integer id;
 
     public AddDataCaseExtend() {
-        serverMap = Login;
+        iApi = AddData;
     }
 
     @DataDepend(isAlwaysExecute = true)
@@ -43,7 +43,7 @@ public class AddDataCaseExtend extends AddDataCase {
     @AutoTest
     public AddDataCase rightLoginCaseExtend() {
         id = 1;
-        loginName = get("g_loginName");
+        name = get("g_loginName");
         pwd = get("g_loginPwd");
         type = new Type().role(new TypeIn().TypeIn(IS_MENAGE));
         depend = "123";

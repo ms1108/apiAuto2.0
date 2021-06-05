@@ -1,11 +1,11 @@
 package base;
 
-public interface IServiceMap {
+public interface IApi {
     //主机地址
     String getHost();
 
     //接口地址
-    String getUri();
+    String getApiPath();
 
     //请求方式和参数类型
     ApiMethod getMethodAndRequestType();

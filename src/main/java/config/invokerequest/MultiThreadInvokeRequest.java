@@ -38,7 +38,7 @@ public class MultiThreadInvokeRequest implements Runnable, InvokeRequest {
         specification = requestData.getMethodAndRequestType().getParamMethod().paramMethodBuild(specification, requestData);
 
         //发送请求
-        Response response = specification.request(requestData.getMethodAndRequestType().getApiMethod(), requestData.getUri());
+        Response response = specification.request(requestData.getMethodAndRequestType().getApiMethod(), requestData.getUrl());
 
         //存储响应时加锁
         lock.lock();

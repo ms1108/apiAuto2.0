@@ -30,52 +30,52 @@ public class DataStore {
     public static Map<String, Object> dependChainDIY = new HashMap<>();
 
     //获取响应中的值
-    public static <T> T getResponseValue(IServiceMap iServiceMap, String path) {
-        Response response = res.get(iServiceMap.getUUID());
+    public static <T> T getResponseValue(IApi iApi, String path) {
+        Response response = res.get(iApi.getUUID());
         if (response == null) {
-            Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
+            Assert.fail(iApi.getApiPath() + ",接口无响应数据");
         }
 
         T t = (T) response.path(path);
         if (t == null) {
-            Assert.fail("未获取到请求数据，接口：" + iServiceMap.getUri() + ",路径:" + path);
+            Assert.fail("未获取到请求数据，接口：" + iApi.getApiPath() + ",路径:" + path);
         }
         return t;
     }
 
     //获取所有响应求头
-    public static Headers getResponseHeaders(IServiceMap iServiceMap) {
-        Response response = res.get(iServiceMap.getUUID());
+    public static Headers getResponseHeaders(IApi iApi) {
+        Response response = res.get(iApi.getUUID());
         if (response == null) {
-            Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
+            Assert.fail(iApi.getApiPath() + ",接口无响应数据");
         }
 
         Headers t = response.headers();
         if (t == null) {
-            Assert.fail("未获取到响应头，接口：" + iServiceMap.getUri());
+            Assert.fail("未获取到响应头，接口：" + iApi.getApiPath());
         }
         return t;
     }
 
     //获取指定响应求头
-    public static Header getResponseHeader(IServiceMap iServiceMap, String headerName) {
-        Header t = getResponseHeaders(iServiceMap).get(headerName);
+    public static Header getResponseHeader(IApi iApi, String headerName) {
+        Header t = getResponseHeaders(iApi).get(headerName);
         if (t == null) {
-            Assert.fail("未获取到响应头，接口：" + iServiceMap.getUri() + ",响应头:" + headerName);
+            Assert.fail("未获取到响应头，接口：" + iApi.getApiPath() + ",响应头:" + headerName);
         }
         return t;
     }
 
     //获取cookies
-    public static <T> T getResponseCookies(IServiceMap iServiceMap) {
-        Response response = res.get(iServiceMap.getUUID());
+    public static <T> T getResponseCookies(IApi iApi) {
+        Response response = res.get(iApi.getUUID());
         if (response == null) {
-            Assert.fail(iServiceMap.getUri() + ",接口无响应数据");
+            Assert.fail(iApi.getApiPath() + ",接口无响应数据");
         }
 
         T t = (T) response.cookies();
         if (t == null) {
-            Assert.fail("未获取到cookies，接口：" + iServiceMap.getUri());
+            Assert.fail("未获取到cookies，接口：" + iApi.getApiPath());
         }
         return t;
     }
@@ -86,20 +86,20 @@ public class DataStore {
 
         T t = (T) response.path(path);
         if (t == null) {
-            Assert.fail("未获取到请求数据，接口：" + baseCase.getServerMap().getUri() + ",路径:" + path);
+            Assert.fail("未获取到请求数据，接口：" + baseCase.getIApi().getApiPath() + ",路径:" + path);
         }
         return t;
     }
 
     //获取请求过的数据
-    public static <T> T getRequestValue(IServiceMap iServiceMap, String path) {
-        JsonPath jsonPath = req.get(iServiceMap.getUUID());
+    public static <T> T getRequestValue(IApi iApi, String path) {
+        JsonPath jsonPath = req.get(iApi.getUUID());
         if (jsonPath == null) {
-            Assert.fail(iServiceMap.getUri() + ",接口无请求数据");
+            Assert.fail(iApi.getApiPath() + ",接口无请求数据");
         }
         T t = (T) jsonPath.get(path);
         if (t == null) {
-            Assert.fail("未获取到请求数据，接口：" + iServiceMap.getUri() + ",路径:" + path);
+            Assert.fail("未获取到请求数据，接口：" + iApi.getApiPath() + ",路径:" + path);
         }
         return t;
     }

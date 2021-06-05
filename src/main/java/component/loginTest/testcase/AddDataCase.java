@@ -4,9 +4,9 @@ import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
-import base.IServiceMap;
+import base.IApi;
 import component.loginTest.service_constant.DemoConstant;
-import component.loginTest.service_constant.DemoService;
+import component.loginTest.service_constant.DemoApiEnum;
 import config.asserts.*;
 import config.header.DefaultHeaders;
 import datafactory.DataFactoryEntity;
@@ -21,19 +21,19 @@ import java.util.List;
 
 import static base.DataStore.*;
 import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
-import static component.loginTest.service_constant.DemoService.Login;
+import static component.loginTest.service_constant.DemoApiEnum.AddData;
 import static utils.set.PropertiesUtil.get;
 
 @Data
 public class AddDataCase extends BaseCase {
-    public IServiceMap serverMap = Login;
+    public IApi iApi = AddData;
 
     @Unique(assertFail = SuccessAssertDefault.class, group = "1")
     @EnumString
     @NotNull(asserts = SuccessAssertDefault.class)
     @NotEmpty(asserts = SuccessAssertDefault.class)
     @Blank(assertFail = SuccessAssertDefault.class)
-    public String loginName;
+    public String name;
 
 
     @Length(minLen = 1, maxLen = 8, assertFail = SuccessAssertDefault.class)
@@ -78,7 +78,7 @@ public class AddDataCase extends BaseCase {
     @MultiRequest(multiThreadNum = 10)
     @DataFactory(listApi = ListCase.class, des = "数据被创建")
     public AddDataCase rightCase() {
-        loginName = get("g_loginName");
+        name = get("g_loginName");
         pwd = get("g_loginPwd");
         type = new Type().role(new TypeIn().TypeIn(IS_MENAGE));
         depend = "123";
@@ -90,7 +90,7 @@ public class AddDataCase extends BaseCase {
     @BaseCaseData(group = "1")
     @DataFactory(listApi = ListCase.class, des = "数据被创建2")
     public AddDataCase rightCase1() {
-        loginName = get("g_loginName");
+        name = get("g_loginName");
         pwd = get("g_loginPwd");
         type = new Type().role(new TypeIn().TypeIn(DemoConstant.No_MENAGE));
         depend = "123456";
@@ -100,6 +100,7 @@ public class AddDataCase extends BaseCase {
         return this;
     }
 
+    @Description(name = "用例的名称",des = "用例的描述")
     public AddDataCase errorCase() {
         AddDataCase addDataCase = rightCase();
         addDataCase.pwd = "";
@@ -110,7 +111,7 @@ public class AddDataCase extends BaseCase {
     public AddDataCase dependCase() {
         AddDataCase addDataCase = rightCase();
         //从其他的请求参数中获取值
-        addDataCase.depend = getRequestValue(DemoService.Config, "depend");
+        addDataCase.depend = getRequestValue(DemoApiEnum.Config, "depend");
         return this;
     }
 
@@ -118,7 +119,7 @@ public class AddDataCase extends BaseCase {
         AddDataCase addDataCase = rightCase();
         addDataCase.depend = null;
         //从其他响应中获取值，需要事先调用相应接口
-        addDataCase.depend = getResponseValue(DemoService.Config, "res.depend");
+        addDataCase.depend = getResponseValue(DemoApiEnum.Config, "res.depend");
         addDataCase.depend = invokeApiGetValue(new ConfigCase(), "res.depend");
         return this;
     }

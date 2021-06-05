@@ -2,7 +2,7 @@ package api;
 
 import base.ApiMethod;
 import base.BaseCase;
-import base.IServiceMap;
+import base.IApi;
 import com.alibaba.fastjson.JSONObject;
 import config.asserts.AssertMethod;
 import config.asserts.FailAssetDefault;
@@ -26,7 +26,7 @@ public class RequestData {
 
     private String host;
 
-    private String uri;
+    private String url;
     //请求的方式
     private ApiMethod methodAndRequestType;
     //jsonSchema的位置
@@ -48,7 +48,7 @@ public class RequestData {
     //case对象
     private BaseCase baseParam;
     //uri枚举对象
-    private IServiceMap serverMap;
+    private IApi iApi;
     //是否开启断言
     private boolean isOpenAssert = true;
     //请求休眠
@@ -68,18 +68,18 @@ public class RequestData {
 
     public void requestData(BaseCase param) {
         this.baseParam = param;
-        this.serverMap = param.getServerMap();
-        this.host = param.getServerMap().getHost();
-        this.methodAndRequestType = param.getServerMap().getMethodAndRequestType();
-        this.jsonSchemaPath = param.getServerMap().getJsonSchemaPath();
-        this.des = param.getServerMap().getDes();
-        this.uri = param.getServerMap().getUri();
+        this.iApi = param.getIApi();
+        this.host = param.getIApi().getHost();
+        this.methodAndRequestType = param.getIApi().getMethodAndRequestType();
+        this.jsonSchemaPath = param.getIApi().getJsonSchemaPath();
+        this.des = param.getIApi().getDes();
+        this.url = param.getIApi().getApiPath();
         this.assertMethod = param.getAssertMethod();
         this.headers = param.getHeaders();//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
         this.pathParam = param.getPathParam();
         this.iParamPreHandle = param.getIParamPreHandle() != null ? param.getIParamPreHandle() : new ParamPreHandleBlankImpl();
         //param转json串时，以下的字段不需要
-        param.serverMap = null;
+        param.iApi = null;
         param.assertMethod = null;
         param.headers = null;
         param.pathParam = null;
@@ -89,7 +89,7 @@ public class RequestData {
             Assert.fail("Case类中不能出现以get开头的方法，或者在该方法加上注解：@JSONField(serialize = false)");
         }
         //置null后避免空指针问题，重新赋值
-        param.serverMap = this.serverMap;
+        param.iApi = this.iApi;
         param.assertMethod = this.assertMethod;
         param.headers = this.headers;
         param.pathParam = this.pathParam;

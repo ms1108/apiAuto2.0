@@ -2,7 +2,6 @@ package config.asserts;
 
 import api.RequestData;
 import base.BaseCase;
-import base.IServiceMap;
 import io.restassured.response.Response;
 
 /**

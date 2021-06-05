@@ -1,11 +1,11 @@
 package component.loginTest.testcase;
 
 import base.UploadCase;
-import component.loginTest.service_constant.DemoService;
+import component.loginTest.service_constant.DemoApiEnum;
 
 public class TestUploadCase extends UploadCase {
     public TestUploadCase() {
-        serverMap = DemoService.Upload;
+        iApi = DemoApiEnum.Upload;
     }
 
     public TestUploadCase uploadCase() {
@@ -13,8 +13,4 @@ public class TestUploadCase extends UploadCase {
         return this;
     }
 
-    @Override
-    public void dataDepend() {
-
-    }
 }
