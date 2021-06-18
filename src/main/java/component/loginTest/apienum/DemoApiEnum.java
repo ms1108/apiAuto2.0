@@ -1,4 +1,4 @@
-package component.loginTest.service_constant;
+package component.loginTest.apienum;
 
 import base.ApiMethod;
 import base.IApi;

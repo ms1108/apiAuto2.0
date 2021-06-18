@@ -22,13 +22,21 @@ public class DemoTest extends AnnotationTest {
     //更多断言方法http://testingpai.com/article/1599472747188
     @Test
     public void test() {
+        //篡改调用链中的任何信息
         dependChainDIY.put(ConfigCase.class.getSimpleName(), new ConfigCase() {
             @Override
             public void dataDepend() {
                 System.out.println("自定义依赖调用链");
             }
         });
-        AddDataCase addDataCase = new AddDataCase();
+        String s = "重写AddDataCase的依赖";
+        AddDataCase addDataCase = new AddDataCase() {
+            @Override
+            public void dataDepend() {
+                System.out.println(s);
+                super.dataDepend();
+            }
+        };
         addDataCase.dataDepend();
         apiTest(new RequestData(addDataCase.rightCase())
                 .setStepDes("这是我的测试步骤")
@@ -70,13 +78,13 @@ public class DemoTest extends AnnotationTest {
     @Test
     public void test3() {
         apiTest(new RequestData(new ConfigCase().config()));
-        apiTest(new RequestData(new AddDataCase().dependCase()));
+        apiTest(new AddDataCase().autoTestCase());
     }
 
     @Test
     public void test4() {
         apiTest(new RequestData(new ConfigCase().config()));
-        apiTest(new RequestData(new AddDataCase().dependCase1()));
+        apiTest(new AddDataCase().dependCase1());
     }
 
     @Test

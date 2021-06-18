@@ -5,10 +5,8 @@ import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
 import base.IApi;
-import component.loginTest.service_constant.DemoConstant;
-import component.loginTest.service_constant.DemoApiEnum;
+import component.loginTest.apienum.DemoApiEnum;
 import config.asserts.*;
-import config.header.DefaultHeaders;
 import datafactory.DataFactoryEntity;
 import datafactory.DataFactoryTest;
 import datafactory.annotation.DataFactory;
@@ -18,13 +16,14 @@ import lombok.experimental.Accessors;
 import utils.RandomUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static base.DataStore.*;
-import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
-import static component.loginTest.service_constant.DemoApiEnum.AddData;
+import static component.loginTest.apienum.DemoApiEnum.AddData;
 import static utils.set.PropertiesUtil.get;
 
 @Data
+@Accessors(fluent = true)
 public class AddDataCase extends BaseCase {
     public IApi iApi = AddData;
 
@@ -33,74 +32,63 @@ public class AddDataCase extends BaseCase {
     @NotNull(asserts = SuccessAssertDefault.class)
     @NotEmpty(asserts = SuccessAssertDefault.class)
     @Blank(assertFail = SuccessAssertDefault.class)
-    public String name;
+    public String name = get("g_loginName");
 
 
     @Length(minLen = 1, maxLen = 8, assertFail = SuccessAssertDefault.class)
-    public String pwd;
+    public String pwd = get("g_loginPwd");
 
     @EnumInt
     public Integer isManage;
 
-    public Type type;
+    public Type type = new Type();
 
     @StringToInt(asserts = SuccessAssertDefault.class)
     @IntToString(resetAssert = "assertRightLogin")
     public String depend;//依赖config接口返回的结果
 
-    public String userName;
+    public String userName = RandomUtil.getString();
 
     @Data
-    @Accessors(fluent = true)
     public static class Type {
         @Range(maxNum = "10", minInfinite = true, assertFail = SuccessAssertDefault.class)
         @Unique(assertFail = SuccessAssertDefault.class)
-        public TypeIn role;
+        public TypeIn role = new TypeIn();
     }
 
     @Data
-    @Accessors(fluent = true)
     public static class TypeIn {
         @Range(minNum = "0.1", maxNum = "1", floatValue = "0.1", assertFail = SuccessAssertDefault.class)//测试范围(0,1]
         @EnumInt
         @EnumString
-        public Integer TypeIn;
+        public Integer TypeIn = 1;
     }
 
     @DataDepend
     public void dataDepend() {
         ConfigCase baseCase = newDependInstance(ConfigCase.class);
-        baseCase.dataDepend();
-        apiTest(baseCase.config());
+        //baseCase.dataDepend();
+        baseCase.config();
+        apiTest(baseCase);
     }
 
     @BaseCaseData
     @MultiRequest(multiThreadNum = 10)
     @DataFactory(listApi = ListCase.class, des = "数据被创建")
     public AddDataCase rightCase() {
-        name = get("g_loginName");
-        pwd = get("g_loginPwd");
-        type = new Type().role(new TypeIn().TypeIn(IS_MENAGE));
         depend = "123";
-        userName = RandomUtil.getString();
-        assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
         return this;
     }
 
     @BaseCaseData(group = "1")
     @DataFactory(listApi = ListCase.class, des = "数据被创建2")
     public AddDataCase rightCase1() {
-        name = get("g_loginName");
-        pwd = get("g_loginPwd");
-        type = new Type().role(new TypeIn().TypeIn(DemoConstant.No_MENAGE));
         depend = "123456";
-        userName = RandomUtil.getString();
-        assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
-        headers = new DefaultHeaders();
+        type.role.TypeIn = 2;
         return this;
     }
 
-    @Description(name = "用例的名称",des = "用例的描述")
+    @Description(name = "用例的名称", des = "用例的描述")
     public AddDataCase errorCase() {
         AddDataCase addDataCase = rightCase();
         addDataCase.pwd = "";
@@ -108,23 +96,26 @@ public class AddDataCase extends BaseCase {
     }
 
     @AutoTest(des = "注解自动测试")
-    public AddDataCase dependCase() {
-        AddDataCase addDataCase = rightCase();
-        //从其他的请求参数中获取值
-        addDataCase.depend = getRequestValue(DemoApiEnum.Config, "depend");
+    public AddDataCase autoTestCase() {
+        rightCase();
+        pwd = "111";
         return this;
     }
 
     public AddDataCase dependCase1() {
-        AddDataCase addDataCase = rightCase();
-        addDataCase.depend = null;
+        rightCase();
+        depend = null;
         //从其他响应中获取值，需要事先调用相应接口
-        addDataCase.depend = getResponseValue(DemoApiEnum.Config, "res.depend");
-        addDataCase.depend = invokeApiGetValue(new ConfigCase(), "res.depend");
+        depend = getResponseValue(DemoApiEnum.Config, "res.depend");
+        depend = invokeApiGetValue(new ConfigCase(), "res.depend");
+        //从其他的请求参数中获取值
+        depend = getRequestValue(DemoApiEnum.Config, "depend");
         return this;
     }
 
     public AssertMethod assertRightLogin() {
+        //headers = new DefaultHeaders();
+        //assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
         return new SuccessAssertGather(new EqualAssert("res", "test success"),
                 new ByOtherApiAssert(new ConfigCase().config()), new EqualAssert("res.depend", "123"));
     }

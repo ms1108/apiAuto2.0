@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 //方法(用例)的名称和描述
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.METHOD})
+@Target(value = {ElementType.METHOD, ElementType.FIELD})
 @Inherited
 public @interface Description {
     String name() default "";

@@ -1,7 +1,7 @@
 package component.loginTest.testcase;
 
 import base.BaseCase;
-import component.loginTest.service_constant.DemoApiEnum;
+import component.loginTest.apienum.DemoApiEnum;
 
 public class ConfigCase extends BaseCase {
     public String depend;

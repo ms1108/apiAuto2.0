@@ -11,13 +11,10 @@ import datafactory.annotation.DataFactory;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
-import utils.RandomUtil;
 
 import java.util.List;
 
-import static component.loginTest.service_constant.DemoConstant.IS_MENAGE;
-import static component.loginTest.service_constant.DemoApiEnum.AddData;
-import static utils.set.PropertiesUtil.get;
+import static component.loginTest.apienum.DemoApiEnum.AddData;
 
 @Data
 @Accessors(fluent = true)
@@ -41,13 +38,9 @@ public class AddDataCaseExtend extends AddDataCase {
     @MultiRequest(multiThreadNum = 10)
     @DataFactory(listApi = ListCase.class, des = "数据被创建LoginCaseExtend")
     @AutoTest
-    public AddDataCase rightLoginCaseExtend() {
+    public AddDataCaseExtend rightLoginCaseExtend() {
         id = 1;
-        name = get("g_loginName");
-        pwd = get("g_loginPwd");
-        type = new Type().role(new TypeIn().TypeIn(IS_MENAGE));
         depend = "123";
-        userName = RandomUtil.getString();
         assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
         return this;
     }

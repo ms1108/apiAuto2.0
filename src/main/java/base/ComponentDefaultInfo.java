@@ -30,17 +30,6 @@ public enum ComponentDefaultInfo {
         this.iParamPreHandle = iParamPreHandle;
         this.assertMethod = assertMethod;
     }
-    //通过二级目录精确匹配
-    //public static ComponentDefaultInfo getModuleEnum(String packageName) {
-    //    packageName = packageName.split("\\.")[1];
-    //    for (ComponentDefaultInfo value : ComponentDefaultInfo.values()) {
-    //        if (value.getPackageName().equals(packageName)) {
-    //            return value;
-    //        }
-    //    }
-    //    Assert.fail("没有找到对应的枚举模块," + packageName);
-    //    return COMPONENT;
-    //}
 
     //模糊匹配，谁命中率高就返回谁
     public static ComponentDefaultInfo getModuleEnum(String packageName) {
