@@ -1,7 +1,7 @@
-package component.loginTest.testcase;
+package business.loginTest.testcase;
 
 import base.BaseCase;
-import component.loginTest.apienum.DemoApiEnum;
+import business.loginTest.apienum.DemoApiEnum;
 import lombok.Data;
 
 import static base.DataStore.getResponseValue;

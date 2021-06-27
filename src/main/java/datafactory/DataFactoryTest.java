@@ -25,7 +25,7 @@ public class DataFactoryTest extends ApiTest {
     @Test
     public void createData() {
         if (dataFactoryBaseCase == null) {
-            dataFactoryBaseCase = getDataFactoryBaseCase("component");
+            dataFactoryBaseCase = getDataFactoryBaseCase("business");
         }
         //获取符合条件的实体
         List<DataFactoryEntity> dataFactoryEntities = dataFactoryBaseCase.stream().filter(d -> {

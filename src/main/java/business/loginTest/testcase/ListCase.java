@@ -1,9 +1,9 @@
-package component.loginTest.testcase;
+package business.loginTest.testcase;
 
 import annotation.annotations.DataDepend;
 import annotation.annotations.Search;
 import base.BaseListCase;
-import component.loginTest.apienum.DemoApiEnum;
+import business.loginTest.apienum.DemoApiEnum;
 
 public class ListCase extends BaseListCase {
     @Search(addDataBaseCase = AddDataCase.class, searchValuePath = "loginName")

@@ -1,4 +1,4 @@
-package component.loginTest.apienum;
+package business.loginTest.apienum;
 
 import base.ApiMethod;
 import base.IApi;

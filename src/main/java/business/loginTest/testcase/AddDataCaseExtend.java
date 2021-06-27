@@ -1,10 +1,10 @@
-package component.loginTest.testcase;
+package business.loginTest.testcase;
 
 import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
-import component.loginTest.apienum.DemoApiEnum;
+import business.loginTest.apienum.DemoApiEnum;
 import config.asserts.*;
 import datafactory.DataFactoryEntity;
 import datafactory.DataFactoryTest;
@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 import static base.DataStore.getResponseValue;
-import static component.loginTest.apienum.DemoApiEnum.AddData;
+import static business.loginTest.apienum.DemoApiEnum.AddData;
 
 @Data
 @Accessors(fluent = true)

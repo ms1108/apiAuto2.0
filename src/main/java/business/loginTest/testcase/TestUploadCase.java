@@ -1,7 +1,7 @@
-package component.loginTest.testcase;
+package business.loginTest.testcase;
 
 import base.UploadCase;
-import component.loginTest.apienum.DemoApiEnum;
+import business.loginTest.apienum.DemoApiEnum;
 
 public class TestUploadCase extends UploadCase {
     public TestUploadCase() {

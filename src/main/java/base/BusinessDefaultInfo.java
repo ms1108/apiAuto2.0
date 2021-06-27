@@ -16,15 +16,15 @@ import java.util.stream.Collectors;
 
 
 @Getter
-public enum ComponentDefaultInfo {
-    COMPONENT("loginTest", DefaultHeaders.class, ParamPreHandleImpl.class, SuccessAssertDefault.class);
+public enum BusinessDefaultInfo {
+    BUSINESS("loginTest", DefaultHeaders.class, ParamPreHandleImpl.class, SuccessAssertDefault.class);
     private String packageName;
     private Class<? extends IHeaders> iHeaders;
     private Class<? extends IParamPreHandle> iParamPreHandle;
     private Class<? extends AssertMethod> assertMethod;
-    private static Map<String, ComponentDefaultInfo> packageNameAndEnum = new HashMap<>();
+    private static Map<String, BusinessDefaultInfo> packageNameAndEnum = new HashMap<>();
 
-    ComponentDefaultInfo(String packageName, Class<? extends IHeaders> iHeaders, Class<? extends IParamPreHandle> iParamPreHandle, Class<? extends AssertMethod> assertMethod) {
+    BusinessDefaultInfo(String packageName, Class<? extends IHeaders> iHeaders, Class<? extends IParamPreHandle> iParamPreHandle, Class<? extends AssertMethod> assertMethod) {
         this.packageName = packageName;
         this.iHeaders = iHeaders;
         this.iParamPreHandle = iParamPreHandle;
@@ -32,15 +32,15 @@ public enum ComponentDefaultInfo {
     }
 
     //模糊匹配，谁命中率高就返回谁
-    public static ComponentDefaultInfo getModuleEnum(String packageName) {
+    public static BusinessDefaultInfo getModuleEnum(String packageName) {
         //获取历史记录的感觉
         if (packageNameAndEnum.get(packageName) != null) {
             return packageNameAndEnum.get(packageName);
         }
         //枚举存的包名，和传进来的包名做对比，那个看命中率高就返回那个枚举
         int similarity = 0;
-        ComponentDefaultInfo possibleEnum = null;
-        for (ComponentDefaultInfo value : ComponentDefaultInfo.values()) {
+        BusinessDefaultInfo possibleEnum = null;
+        for (BusinessDefaultInfo value : BusinessDefaultInfo.values()) {
             List<String> enumPackageNames = Arrays.stream(value.getPackageName().split("\\.")).collect(Collectors.toList());
             List<String> packageNames = Arrays.stream(packageName.split("\\.")).collect(Collectors.toList());
             //求列表的交集，即公共部分

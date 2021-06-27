@@ -25,7 +25,7 @@ public class BaseCase extends ApiTest {
     @SneakyThrows
     public BaseCase() {
         String packageName = this.getClass().getPackage().getName();
-        ComponentDefaultInfo defaultImplEnum = ComponentDefaultInfo.getModuleEnum(packageName);
+        BusinessDefaultInfo defaultImplEnum = BusinessDefaultInfo.getModuleEnum(packageName);
         headers = defaultImplEnum.getIHeaders().newInstance();
         iParamPreHandle = defaultImplEnum.getIParamPreHandle().newInstance();
         assertMethod = defaultImplEnum.getAssertMethod().newInstance();

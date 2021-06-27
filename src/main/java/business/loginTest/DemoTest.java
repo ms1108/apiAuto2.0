@@ -1,11 +1,11 @@
-package component.loginTest;
+package business.loginTest;
 
 import api.RequestData;
 import annotation.AnnotationTest;
-import component.loginTest.testcase.ConfigCase;
-import component.loginTest.testcase.AddDataCase;
-import component.loginTest.testcase.AddDataCaseExtend;
-import component.loginTest.testcase.TestUploadCase;
+import business.loginTest.testcase.ConfigCase;
+import business.loginTest.testcase.AddDataCase;
+import business.loginTest.testcase.AddDataCaseExtend;
+import business.loginTest.testcase.TestUploadCase;
 import config.asserts.EqualAssert;
 import config.asserts.SuccessAssertDefault;
 import org.testng.Assert;
