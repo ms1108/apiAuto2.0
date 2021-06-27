@@ -14,7 +14,7 @@ public class DateUtil {
     public static String modifyDate(int offset) {
         return modifyDate(ChronoUnit.DAYS, offset, "yyyy-MM-dd HH:mm:ss");
     }
-
+    //当pattern为yyyy时则只返回年，同理
     public static String modifyDate(ChronoUnit chronoUnit, int offset, String pattern) {
         return formatDate(LocalDateTime.now().plus(offset, chronoUnit), pattern);
     }

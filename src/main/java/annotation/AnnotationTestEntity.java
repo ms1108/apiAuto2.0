@@ -14,7 +14,6 @@ public class AnnotationTestEntity {
     public Method dataDependMethod;
     public Method baseCaseDataMethod;
     public Class<? extends BaseCase> baseCaseClass;
-    public BaseCase baseCase;
     public BaseCase baseCaseData;
     public Annotation annotation;
     //是否在每个注解测试都执行一次

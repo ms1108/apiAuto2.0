@@ -4,7 +4,6 @@ import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
-import base.IApi;
 import component.loginTest.apienum.DemoApiEnum;
 import config.asserts.*;
 import datafactory.DataFactoryEntity;
@@ -25,7 +24,6 @@ import static utils.set.PropertiesUtil.get;
 @Data
 @Accessors(fluent = true)
 public class AddDataCase extends BaseCase {
-    public IApi iApi = AddData;
 
     @Unique(assertFail = SuccessAssertDefault.class, group = "1")
     @EnumString
@@ -45,7 +43,7 @@ public class AddDataCase extends BaseCase {
 
     @StringToInt(asserts = SuccessAssertDefault.class)
     @IntToString(resetAssert = "assertRightLogin")
-    public String depend;//依赖config接口返回的结果
+    public String depend = getResponseValue(DemoApiEnum.Config, "res.depend", String.class);//依赖config接口返回的结果
 
     public String userName = RandomUtil.getString();
 
@@ -61,13 +59,17 @@ public class AddDataCase extends BaseCase {
         @Range(minNum = "0.1", maxNum = "1", floatValue = "0.1", assertFail = SuccessAssertDefault.class)//测试范围(0,1]
         @EnumInt
         @EnumString
-        public Integer TypeIn = 1;
+        public Integer TypeIn = getResponseValue(DemoApiEnum.Config, "res.depend", Integer.class);
+    }
+
+    public AddDataCase() {
+        iApi = AddData;
     }
 
     @DataDepend
     public void dataDepend() {
         ConfigCase baseCase = newDependInstance(ConfigCase.class);
-        //baseCase.dataDepend();
+        baseCase.dataDepend();
         baseCase.config();
         apiTest(baseCase);
     }

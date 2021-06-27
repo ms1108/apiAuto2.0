@@ -2,9 +2,18 @@ package component.loginTest.testcase;
 
 import base.BaseCase;
 import component.loginTest.apienum.DemoApiEnum;
+import lombok.Data;
 
+import static base.DataStore.getResponseValue;
+
+@Data
 public class ConfigCase extends BaseCase {
-    public String depend;
+    public String depend = getResponseValue(DemoApiEnum.Config, "res.depend");
+    public Test test = new Test();
+
+    public class Test {
+        public String myTest = getResponseValue(DemoApiEnum.Config, "res.depend");
+    }
 
     public ConfigCase() {
         iApi = DemoApiEnum.Config;

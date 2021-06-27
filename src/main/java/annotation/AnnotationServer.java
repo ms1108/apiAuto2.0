@@ -238,21 +238,20 @@ public class AnnotationServer extends ApiTest{
 
     @SneakyThrows
     public void executeAnnotationTest(AnnotationTestEntity annotationTestEntity) {
-        //初始化BaseCase对象
-        annotationTestEntity.baseCase = annotationTestEntity.baseCaseClass.newInstance();
         //执行依赖方法
         Method dataDependMethod = annotationTestEntity.dataDependMethod;
         if (dataDependMethod != null && annotationTestEntity.executeDataDependMethod) {
             ReportUtil.log("DataDependMethod  : " + dataDependMethod.getName());
-            dataDependMethod.invoke(annotationTestEntity.baseCase);
+            dataDependMethod.invoke(annotationTestEntity.baseCaseClass.newInstance());
         }
         //执行BaseCaseData
         Method baseCaseDataMethod = annotationTestEntity.baseCaseDataMethod;
         BaseCase baseCaseData;
         if (baseCaseDataMethod != null) {
-            baseCaseData = (BaseCase) baseCaseDataMethod.invoke(annotationTestEntity.baseCase);
+            //有的依赖数据需要执行了依赖方法才能获得，所以对象要放在后边初始化
+            baseCaseData = (BaseCase) baseCaseDataMethod.invoke(annotationTestEntity.baseCaseClass.newInstance());
         } else {//不存在baseCaseData则用初始对象
-            baseCaseData = annotationTestEntity.baseCase;
+            baseCaseData = annotationTestEntity.baseCaseClass.newInstance();
         }
         annotationTestEntity.baseCaseData = baseCaseData;
         IAnnotationTestMethod instance = annotationTestEntity.iAnnotationTestMethod.newInstance();

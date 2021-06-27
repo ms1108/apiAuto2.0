@@ -21,7 +21,7 @@ public class SearchDefault extends IAnnotationTestMethod {
         //搜索值，需要先往列表中新增数据
         Object value = getRequestValue(annotation.addDataBaseCase().newInstance().getIApi(), annotation.searchValuePath());
         //用于模糊搜索annotation.expectListLen()
-        String dimSearch = value.toString().substring(0, value.toString().length() - 1);
+        String dimSearch = value.toString().substring(1, value.toString().length() - 1);
         //当ListSearchAssert传入期望值后，同时期望列表长度为expectListLen
         annotationTestEntity.value = value;
         annotationTestEntity.des = des + value;

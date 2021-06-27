@@ -4,6 +4,7 @@ import annotation.AnnotationServer;
 import annotation.AnnotationTestEntity;
 import annotation.annotations.*;
 import base.BaseCase;
+import component.loginTest.apienum.DemoApiEnum;
 import config.asserts.*;
 import datafactory.DataFactoryEntity;
 import datafactory.DataFactoryTest;
@@ -14,6 +15,7 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
+import static base.DataStore.getResponseValue;
 import static component.loginTest.apienum.DemoApiEnum.AddData;
 
 @Data
@@ -21,7 +23,7 @@ import static component.loginTest.apienum.DemoApiEnum.AddData;
 //继承不会执行父类的注解测试
 public class AddDataCaseExtend extends AddDataCase {
     @NotNull(asserts = SuccessAssertDefault.class)
-    public Integer id;
+    public String id = getResponseValue(DemoApiEnum.Config, "res.depend");
 
     public AddDataCaseExtend() {
         iApi = AddData;
@@ -39,7 +41,7 @@ public class AddDataCaseExtend extends AddDataCase {
     @DataFactory(listApi = ListCase.class, des = "数据被创建LoginCaseExtend")
     @AutoTest
     public AddDataCaseExtend rightLoginCaseExtend() {
-        id = 1;
+        id = "1";
         depend = "123";
         assertMethod = new SuccessAssertGather(new EqualAssert("res", "test success"));
         return this;

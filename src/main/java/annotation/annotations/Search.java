@@ -17,8 +17,10 @@ public @interface Search {
 
     //列表根路径可以根据项目写默认的
     String listRootPath() default "data.rows";
-    //searchValuePath 获取addDataBaseCase 请求中的某个数据
+    //searchValuePath 获取addDataBaseCase 请求中的某个数据,如：arg.name
     String searchValuePath() default "";
+    //获取列表返回总数的路径,如：data.total
+    String totalPath() default "data.total";
 
     Class<? extends BaseCase> addDataBaseCase() default BaseCase.class;
 

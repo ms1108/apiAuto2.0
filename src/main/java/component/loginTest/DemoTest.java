@@ -27,8 +27,10 @@ public class DemoTest extends AnnotationTest {
             @Override
             public void dataDepend() {
                 System.out.println("自定义依赖调用链");
+                super.dataDepend();
             }
         });
+        apiTest(new ConfigCase().config());
         String s = "重写AddDataCase的依赖";
         AddDataCase addDataCase = new AddDataCase() {
             @Override
@@ -37,6 +39,13 @@ public class DemoTest extends AnnotationTest {
                 super.dataDepend();
             }
         };
+        dependChainDIY.put(AddDataCase.class.getSimpleName(), new AddDataCase() {
+            @Override
+            public void dataDepend() {
+                System.out.println("自定义依赖调用链");
+                super.dataDepend();
+            }
+        });
         addDataCase.dataDepend();
         apiTest(new RequestData(addDataCase.rightCase())
                 .setStepDes("这是我的测试步骤")

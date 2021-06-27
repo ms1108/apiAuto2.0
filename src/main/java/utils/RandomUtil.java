@@ -39,7 +39,7 @@ public class RandomUtil {
     public static String getPhone() {
         String[] PhoneFirst = {"186", "187", "179", "178", "138", "139", "158", "159"};
         String PhoneEnd = String.valueOf(((int) ((Math.random() * 9) * 10000000)));
-        String RandomFirst = PhoneFirst[(int) (Math.random() * 8)];
+        String RandomFirst = PhoneFirst[(int) (Math.random() * PhoneFirst.length)];
         return RandomFirst + PhoneEnd;
     }
 
