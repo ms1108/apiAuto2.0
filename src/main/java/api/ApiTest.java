@@ -3,6 +3,8 @@ package api;
 import base.BaseCase;
 import base.DataStore;
 import io.restassured.RestAssured;
+import io.restassured.builder.ResponseBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
@@ -41,7 +43,7 @@ public class ApiTest {
         RestAssured.useRelaxedHTTPSValidation();
         RequestSpecification specification = given();
 
-        Map<String, Object> headers = requestData.getHeaders().getHeaders(requestData);
+        Map<String, Object> headers = requestData.getHeader();
         specification.headers(headers);
         ReportUtil.log("Header            : " + headers);
 
@@ -59,6 +61,9 @@ public class ApiTest {
         }
         //发送请求
         Response response = requestData.getInvokeRequest().invokeRequest(specification, requestData);
+        //篡改响应，比如对响应解码等操作
+        Response newResponse = new ResponseBuilder().clone(response).setContentType(ContentType.JSON).build();
+
         //存储请求
         DataStore.req.put(requestData.getIApi().getUUID(), from(requestData.getParamData()));
         //存储响应

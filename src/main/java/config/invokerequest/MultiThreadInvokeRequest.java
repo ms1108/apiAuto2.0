@@ -32,7 +32,7 @@ public class MultiThreadInvokeRequest implements Runnable, InvokeRequest {
         //重新创建specification的目的：子线程发送请求时都会用到given()，会出现死锁问题，所以每个线程都创建一份独立的specification
         RequestSpecification specification = given();
 
-        Map<String, Object> headers = requestData.getHeaders().getHeaders(requestData);
+        Map<String, Object> headers = requestData.getHeader();
         specification.headers(headers);
 
         specification = requestData.getMethodAndRequestType().getParamMethod().paramMethodBuild(specification, requestData);

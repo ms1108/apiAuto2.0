@@ -37,8 +37,10 @@ public class RequestData {
     private String stepDes;
     //cookie
     private Map<String, String> cookies;
+    //请求头接口
+    private IHeaders iHeaders;
     //请求头
-    private IHeaders headers;
+    private Map<String,Object> header;
     //经过参数前置处理器处理的请求参数
     private String param;
     //未经过参数前置处理器处理的请求参数,将会存储到BaseData的map中
@@ -75,7 +77,7 @@ public class RequestData {
         this.des = param.getIApi().getDes();
         this.url = param.getIApi().getApiPath();
         this.assertMethod = param.getAssertMethod();
-        this.headers = param.getHeaders();//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
+        this.iHeaders = param.getHeaders();//header最好由BaseCase对象传入，因为如果通过RequestData类set进来，其他方法调用该接口时又要set一遍，而且编写代码的人离职后，其他人通过BaseCase更直观的看出
         this.pathParam = param.getPathParam();
         this.iParamPreHandle = param.getIParamPreHandle() != null ? param.getIParamPreHandle() : new ParamPreHandleBlankImpl();
         //param转json串时，以下的字段不需要
@@ -91,7 +93,7 @@ public class RequestData {
         //置null后避免空指针问题，重新赋值
         param.iApi = this.iApi;
         param.assertMethod = this.assertMethod;
-        param.headers = this.headers;
+        param.headers = this.iHeaders;
         param.pathParam = this.pathParam;
         param.iParamPreHandle = this.iParamPreHandle;
     }
@@ -110,5 +112,10 @@ public class RequestData {
         //之后再调直接返回。
         // 传入paramData是因为注解测试会对数据做修改，正在发送数据是通过调getParam获取请求数据
         return this.param == null ? this.iParamPreHandle.paramPreHandle(paramData) : this.param;
+    }
+
+    public Map<String,Object> getHeader() {
+        //其他地方可以通过getHeader获取请求头，再通过set进来，实现对请求头的修改
+        return this.header == null ? this.iHeaders.getHeaders(this) : this.header;
     }
 }
