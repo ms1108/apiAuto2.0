@@ -42,8 +42,8 @@ public class ClassFinderUtil {
         List<Class<? extends BaseCase>> classes = new ArrayList<>();
         Map<String, List<String>> packageAndClassNames = scanPackage(scannedPackage);
         for(Map.Entry<String, List<String>> entry : packageAndClassNames.entrySet()){
-            //继承了BaseCase的类都在testcase包下
-            if (!entry.getKey().contains("testcase")) {
+            //继承了BaseCase的类都在component包下
+            if (!entry.getKey().contains("component")) {
                 continue;
             }
             for (String className : entry.getValue()) {
@@ -63,7 +63,7 @@ public class ClassFinderUtil {
     //public static void main(String[] args) {
     //    ClassFinderUtil classFinderUtil = new ClassFinderUtil();
     //    System.out.println(classFinderUtil.scanPackage(""));
-    //    //System.out.println(classFinderUtil.scanned("business.loginTest.testcase"));
+    //    //System.out.println(classFinderUtil.scanned("business.loginTest.component"));
     //}
 
 }

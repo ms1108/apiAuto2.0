@@ -2,17 +2,17 @@ package business.loginTest;
 
 import api.RequestData;
 import annotation.AnnotationTest;
-import business.loginTest.testcase.ConfigCase;
-import business.loginTest.testcase.AddDataCase;
-import business.loginTest.testcase.AddDataCaseExtend;
-import business.loginTest.testcase.TestUploadCase;
+import business.loginTest.component.ConfigCase;
+import business.loginTest.component.AddDataCase;
+import business.loginTest.component.AddDataCaseExtend;
+import business.loginTest.component.TestUploadCase;
 import config.asserts.EqualAssert;
 import config.asserts.SuccessAssertDefault;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.listeners.RetryAnalyzer;
 
-import static base.DataStore.dependChainDIY;
+import static base.DataStore.putDependChainDIY;
 
 /**
  * Test类，建议用于多流程，多场景测试
@@ -23,7 +23,7 @@ public class DemoTest extends AnnotationTest {
     @Test
     public void test() {
         //篡改调用链中的任何信息
-        dependChainDIY.put(ConfigCase.class.getSimpleName(), new ConfigCase() {
+        putDependChainDIY(new ConfigCase() {
             @Override
             public void dataDepend() {
                 System.out.println("自定义依赖调用链");
@@ -39,7 +39,7 @@ public class DemoTest extends AnnotationTest {
                 super.dataDepend();
             }
         };
-        dependChainDIY.put(AddDataCase.class.getSimpleName(), new AddDataCase() {
+        putDependChainDIY(new AddDataCase() {
             @Override
             public void dataDepend() {
                 System.out.println("自定义依赖调用链");

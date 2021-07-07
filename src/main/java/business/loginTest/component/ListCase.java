@@ -1,4 +1,4 @@
-package business.loginTest.testcase;
+package business.loginTest.component;
 
 import annotation.annotations.DataDepend;
 import annotation.annotations.Search;

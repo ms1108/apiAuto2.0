@@ -41,7 +41,13 @@ public class ApiTest {
 
         RestAssured.baseURI = requestData.getHost();
         RestAssured.useRelaxedHTTPSValidation();
-        RequestSpecification specification = given();
+        RequestSpecification specification = given().filter( (req, res, ctx)->{
+            //发送请求
+            Response resOrigin= ctx.next(req, res);
+            //篡改响应，比如对响应解码等操作
+            ResponseBuilder builder=new ResponseBuilder().clone(resOrigin);
+            return builder.setContentType(ContentType.JSON).build();
+        });
 
         Map<String, Object> headers = requestData.getHeader();
         specification.headers(headers);
@@ -61,8 +67,6 @@ public class ApiTest {
         }
         //发送请求
         Response response = requestData.getInvokeRequest().invokeRequest(specification, requestData);
-        //篡改响应，比如对响应解码等操作
-        Response newResponse = new ResponseBuilder().clone(response).setContentType(ContentType.JSON).build();
 
         //存储请求
         DataStore.req.put(requestData.getIApi().getUUID(), from(requestData.getParamData()));

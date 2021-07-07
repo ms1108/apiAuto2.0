@@ -37,18 +37,19 @@ public class BaseCase extends ApiTest {
     //在数据依赖中调用其他接口时尽量使用该方法进行new对象，可实现动态修改依赖的实现
     @SneakyThrows
     public <T> T newDependInstance(Class<T> baseCaseClass) {
-        String name = baseCaseClass.getSimpleName();
+        Class<? extends BaseCase> aClass = (Class<? extends BaseCase>) baseCaseClass;
+        BaseCase baseCase = aClass.newInstance();
+        String uuid = baseCase.iApi.getUUID();
         //自定义中没有对应的对象则自行创建对象
-        if (DataStore.dependChainDIY.get(name) != null) {
-            T dependChain = (T) DataStore.dependChainDIY.get(name);
+        if (DataStore.dependChainDIY.get(uuid) != null) {
+            T dependChain = (T) DataStore.dependChainDIY.get(uuid);
             //因为自定义调用链中的对象创建过早，初始化的数据有可能被修改了，所以要重新创建对象，并把默认值拷贝给旧的对象
-            BeanUtils.copyProperties(baseCaseClass.newInstance(), dependChain);
+            BeanUtils.copyProperties(baseCase, dependChain);
             //只使用一次所以删除
-            DataStore.dependChainDIY.remove(name);
+            DataStore.dependChainDIY.remove(uuid);
             return dependChain;
-        } else {//创建对象并且放入
-            Object dependChain = baseCaseClass.newInstance();
-            return (T) dependChain;
+        } else {
+            return (T) baseCase;
         }
     }
 }

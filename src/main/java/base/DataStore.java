@@ -133,4 +133,9 @@ public class DataStore {
         }
         return (T) Integer.valueOf(value + "");
     }
+
+    //存入调用链的map中
+    public static void putDependChainDIY(BaseCase baseCase){
+        dependChainDIY.put(baseCase.iApi.getUUID(),baseCase);
+    }
 }

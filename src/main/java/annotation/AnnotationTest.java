@@ -14,11 +14,11 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class AnnotationTest extends AnnotationServer {
-    //business.loginTest.testcase格式
+    //business.loginTest.component格式
     private String packagePath;
 
     public AnnotationTest() {
-        packagePath = this.getClass().getPackage().getName() + ".testcase";
+        packagePath = this.getClass().getPackage().getName() + ".component";
     }
 
     public AnnotationTest(String packagePath) {
