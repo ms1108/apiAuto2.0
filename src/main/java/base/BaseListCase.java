@@ -1,6 +1,6 @@
 package base;
 
-public abstract class BaseListCase extends BaseCase {
+public class BaseListCase extends BaseCase {
     public Integer page = 1;
     public Integer pageSize = 10000;
 }
