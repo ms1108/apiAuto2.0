@@ -17,6 +17,7 @@ import utils.RandomUtil;
 import java.util.List;
 
 import static base.DataStore.*;
+import static base.InvokeDependNewInstance.invokeDependNewInstance;
 import static business.loginTest.apienum.DemoApiEnum.AddData;
 import static utils.set.PropertiesUtil.get;
 
@@ -67,10 +68,7 @@ public class AddDataCase extends BaseCase {
 
     @DataDepend
     public void dataDepend() {
-        ConfigCase baseCase = newDependInstance(ConfigCase.class);
-        baseCase.dataDepend();
-        baseCase.config();
-        apiTest(baseCase);
+        apiTest(invokeDependNewInstance(ConfigCase.class).config());
     }
 
     @BaseCaseData

@@ -1,6 +1,5 @@
 package annotation;
 
-import api.ApiTest;
 import api.RequestData;
 import base.BaseCase;
 import com.alibaba.fastjson.JSON;
@@ -10,18 +9,15 @@ import config.asserts.AssertMethod;
 import lombok.SneakyThrows;
 import utils.StringUtil;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 public abstract class IAnnotationTestMethod extends AnnotationServer {
     public abstract void testMethod(AnnotationTestEntity annotationTestEntity);
 
     public void replaceValue(RequestData requestData, String targetPath, Object value) {
-        JSONObject jsonObj = JSON.parseObject(requestData.getParamData());
+        JSONObject jsonObj = JSON.parseObject(requestData.getNotPreHandleParamData());
         JSONPath.set(jsonObj, targetPath, value);
-        requestData.setParamData(JSON.toJSONString(jsonObj));
+        requestData.setNotPreHandleParamData(JSON.toJSONString(jsonObj));
     }
 
     @SneakyThrows

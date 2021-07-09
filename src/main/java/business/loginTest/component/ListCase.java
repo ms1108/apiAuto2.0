@@ -16,6 +16,5 @@ public class ListCase extends BaseListCase {
     @DataDepend
     public void dataDepend() {
         apiTest(new AddDataCase().rightCase());
-        apiTest(new AddDataCase().rightCase());
     }
 }

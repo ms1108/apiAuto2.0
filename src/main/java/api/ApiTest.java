@@ -69,7 +69,7 @@ public class ApiTest {
         Response response = requestData.getInvokeRequest().invokeRequest(specification, requestData);
 
         //存储请求
-        DataStore.req.put(requestData.getIApi().getUUID(), from(requestData.getParamData()));
+        DataStore.req.put(requestData.getIApi().getUUID(), from(requestData.getNotPreHandleParamData()));
         //存储响应
         DataStore.res.put(requestData.getIApi().getUUID(), response);
 

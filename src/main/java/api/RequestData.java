@@ -40,11 +40,11 @@ public class RequestData {
     //请求头接口
     private IHeaders iHeaders;
     //请求头
-    private Map<String,Object> header;
+    private Map<String, Object> header;
     //经过参数前置处理器处理的请求参数
     private String param;
     //未经过参数前置处理器处理的请求参数,将会存储到BaseData的map中
-    private String paramData;
+    private String notPreHandleParamData;
     //拼接在请求路径后的数据
     private String pathParam;
     //case对象
@@ -86,8 +86,8 @@ public class RequestData {
         param.headers = null;
         param.pathParam = null;
         param.iParamPreHandle = null;
-        this.paramData = JSONObject.toJSONString(param);
-        if (paramData.contains("{\"$ref\":\"@\"}")) {
+        this.notPreHandleParamData = JSONObject.toJSONString(param);
+        if (notPreHandleParamData.contains("{\"$ref\":\"@\"}")) {
             Assert.fail("Case类中不能出现以get开头的方法，或者在该方法加上注解：@JSONField(serialize = false)");
         }
         //置null后避免空指针问题，重新赋值
@@ -110,11 +110,11 @@ public class RequestData {
 
     public String getParam() {
         //之后再调直接返回。
-        // 传入paramData是因为注解测试会对数据做修改，正在发送数据是通过调getParam获取请求数据
-        return this.param == null ? this.iParamPreHandle.paramPreHandle(paramData) : this.param;
+        // 传入notPreHandleParamData是因为注解测试会对数据做修改，正在发送数据是通过调getParam获取请求数据
+        return this.param == null ? this.iParamPreHandle.paramPreHandle(notPreHandleParamData) : this.param;
     }
 
-    public Map<String,Object> getHeader() {
+    public Map<String, Object> getHeader() {
         //其他地方可以通过getHeader获取请求头，再通过set进来，实现对请求头的修改
         return this.header == null ? this.iHeaders.getHeaders(this) : this.header;
     }

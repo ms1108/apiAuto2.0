@@ -16,6 +16,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 import static base.DataStore.getResponseValue;
+import static base.InvokeDependNewInstance.invokeDependNewInstance;
 import static business.loginTest.apienum.DemoApiEnum.AddData;
 
 @Data
@@ -31,9 +32,8 @@ public class AddDataCaseExtend extends AddDataCase {
 
     @DataDepend(isAlwaysExecute = true)
     public void dataDepend() {
-        ConfigCase baseCase = newDependInstance(ConfigCase.class);
-        baseCase.dataDepend();
-        apiTest(baseCase.config());
+        ConfigCase configCase = invokeDependNewInstance(ConfigCase.class);
+        apiTest(configCase.config());
     }
 
     @BaseCaseData

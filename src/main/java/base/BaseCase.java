@@ -1,5 +1,6 @@
 package base;
 
+import annotation.annotations.DataDepend;
 import api.ApiTest;
 import config.asserts.AssertMethod;
 import config.header.IHeaders;
@@ -8,8 +9,10 @@ import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 
+import java.lang.reflect.Method;
+
 @Data
-public class BaseCase extends ApiTest {
+public abstract class BaseCase extends ApiTest {
     //拼接路径参数
     public String pathParam;//开头需要携带斜杠'/'
     //接口地址
@@ -38,18 +41,26 @@ public class BaseCase extends ApiTest {
     @SneakyThrows
     public <T> T newDependInstance(Class<T> baseCaseClass) {
         Class<? extends BaseCase> aClass = (Class<? extends BaseCase>) baseCaseClass;
+        //获取dataDepend
+        Method dependMethod = null;
+        for (Method declaredMethod : aClass.getDeclaredMethods()) {
+            if (declaredMethod.isAnnotationPresent(DataDepend.class)) {
+                dependMethod = declaredMethod;
+                break;
+            }
+        }
+        //此时new的对象，由于还没调用依赖接口，所以该对象的数据是不完整的
         BaseCase baseCase = aClass.newInstance();
         String uuid = baseCase.iApi.getUUID();
         //自定义中没有对应的对象则自行创建对象
         if (DataStore.dependChainDIY.get(uuid) != null) {
-            T dependChain = (T) DataStore.dependChainDIY.get(uuid);
-            //因为自定义调用链中的对象创建过早，初始化的数据有可能被修改了，所以要重新创建对象，并把默认值拷贝给旧的对象
-            BeanUtils.copyProperties(baseCase, dependChain);
+            baseCase = (BaseCase) DataStore.dependChainDIY.get(uuid);
             //只使用一次所以删除
             DataStore.dependChainDIY.remove(uuid);
-            return dependChain;
-        } else {
-            return (T) baseCase;
         }
+        //调用依赖方法
+        if (dependMethod != null)
+            dependMethod.invoke(baseCase);
+        return (T) aClass.newInstance();
     }
 }
